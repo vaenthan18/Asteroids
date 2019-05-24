@@ -68,5 +68,6 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 
 	public static void main(String[] args) {
 		AsteroidsGUI gui = new AsteroidsGUI(); //MAIN HERE
+                System.out.println("Git test 123");
 	}
 }
