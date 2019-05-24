@@ -22,8 +22,8 @@ public class Player extends GameComponent {
 	private double angle = 0;
 	private int angularVelocity = 5;
 	protected int velocity;
-	protected int xSpeed;
-	protected int ySpeed;
+	protected int xSpeed = 0;
+	protected int ySpeed = 0;
 	private ArrayList<Integer> inputs = new ArrayList<>();
 	protected Polygon shipBody = new Polygon();
 
@@ -45,11 +45,13 @@ public class Player extends GameComponent {
 	}
 
 	public void update(AsteroidsGUI gui) {
-		xSpeed = 0;
-		ySpeed = 0;
 		if (inputs.contains(KeyEvent.VK_UP)) { //UP
-			x += velocity * Math.cos(Math.toRadians(-angle - 90));
-			y += velocity * Math.sin(Math.toRadians(-angle - 90));
+			xSpeed += velocity * Math.cos(Math.toRadians(-angle - 90));
+			ySpeed += velocity * Math.sin(Math.toRadians(-angle - 90));
+		} else {
+			double a = Math.atan((double)xSpeed / ySpeed);
+			xSpeed -= (Math.abs(xSpeed) > 0) ? (velocity * Math.cos(Math.toRadians(-a - 90))) / 2 : 0;
+			ySpeed -= (Math.abs(ySpeed) > 0) ? (velocity * Math.sin(Math.toRadians(-a - 90))) / 2 : 0;
 		}
 		if (inputs.contains(KeyEvent.VK_LEFT)) { //LEFT
 			angle += angularVelocity;
@@ -57,6 +59,7 @@ public class Player extends GameComponent {
 		if (inputs.contains(KeyEvent.VK_RIGHT)) { //RIGHT
 			angle -= angularVelocity;
 		}
+		System.out.println(xSpeed);
 		x += xSpeed;
 		y += ySpeed;
 

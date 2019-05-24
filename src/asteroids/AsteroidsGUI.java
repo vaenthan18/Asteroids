@@ -16,7 +16,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 	private JFrame frame = new JFrame("Asteroids");
 	private JPanel mainPanel = new JPanel(); //Layout
 	private ArrayList<GameComponent> components = new ArrayList<>();
-	public Player player = new Player(500, 300, Color.WHITE, 5);
+	public Player player = new Player(500, 300, Color.WHITE, 2);
 	private boolean running = false;
 
 	public void start() {
