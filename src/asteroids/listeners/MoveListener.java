@@ -26,7 +26,6 @@ public class MoveListener extends KeyAdapter {
 		}
 
 		gui.player.updateMovementInputs(keysPressed);
-		System.out.println(keysPressed);
     }
 
 	public void keyReleased(KeyEvent k) {
