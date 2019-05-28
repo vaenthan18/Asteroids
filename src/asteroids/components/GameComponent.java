@@ -6,29 +6,29 @@ import java.awt.*;
 
 public abstract class GameComponent {
 
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
     protected Color color;
 
-    public GameComponent(int x, int y, Color color) {
+    public GameComponent(double x, double y, Color color) {
         this.x = x;
         this.y = y;
         this.color = color;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
