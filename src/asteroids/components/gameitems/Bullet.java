@@ -17,27 +17,32 @@ import java.awt.geom.Ellipse2D;
 public class Bullet extends GameComponent {
 
     protected double angle;
-    protected double velocity = 5;
-    protected double length = 10;
-    protected double width = 10;
+    protected double velocity = 2;
+    protected double length = 15;
+    protected double width = 15;
+    protected Ellipse2D.Double bulletBody;
     
     public Bullet(double x, double y, Color color, double angle) {
         super(x, y, color);
         this.angle = angle;
     }
     
-    
     public void update(AsteroidsGUI gui) {
+        //Currently no acceleration in bullets.
         x += velocity * Math.cos(Math.toRadians(-angle - 90));
         y += velocity * Math.sin(Math.toRadians(-angle - 90));
         
         if ((x < 0 || x > 1000) | (y < 0 || y > 600)) {
+            //Checks when a bullet goes off screen. 
+            //Removes it from bulletlist when that happens.
+            //This makes sure there aren't a billion useless bullets in bulletList
             gui.removePlayerBullet(this);
         }
+        bulletBody = new Ellipse2D.Double(x - length / 2, y - width / 2, length, width);
     }
     
     public void paintComponent(Graphics2D g2) {
         g2.setColor(color);
-        g2.draw(new Ellipse2D.Double(x - length / 2, y - width / 2, length, width));
+        g2.fill(bulletBody);
     }
 }

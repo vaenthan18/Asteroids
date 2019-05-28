@@ -85,6 +85,10 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         bulletList.remove(newBullet);
     }
     
+    public ArrayList getBulletList() {
+        return bulletList;
+    }
+    
     public static void main(String[] args) {
         AsteroidsGUI gui = new AsteroidsGUI(); //MAIN HERE
     }

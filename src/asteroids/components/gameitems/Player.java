@@ -26,7 +26,9 @@ public class Player extends GameComponent {
     protected double ySpeed = 0;
     private ArrayList<Integer> inputs = new ArrayList<>();
     protected Path2D.Double shipBody = new Path2D.Double();
-
+    protected double maxShootDelay = 15; //The lower the number, the higher the fire rate
+    protected double shootDelay = 0; //Current shoot delay counter
+    
     public Player(int x, int y, Color color, double velocity) {
         super(x, y, color);
         this.velocity = velocity;
@@ -62,13 +64,28 @@ public class Player extends GameComponent {
             angle -= angularVelocity;
         }
         if (inputs.contains(KeyEvent.VK_SPACE)) { //New Shot fired
-            gui.addPlayerBullet(new Bullet(x, y, Color.BLACK, angle));
-        }       
+            if (shootDelay <= 0) {
+                gui.addPlayerBullet(new Bullet(x, y, Color.BLACK, angle));
+                shootDelay = maxShootDelay;
+            }
+        }   
+        if (shootDelay > 0) {
+            setShootDelay(getShootDelay() - 1);
+        }
+        
         x += xSpeed;
         y += ySpeed;
 
         x = (x < 0 || x > 1000) ? Math.abs(x - 1000) : x;
         y = (y < 0 || y > 600) ? Math.abs(y - 600) : y;
+    }
+    
+    public void setShootDelay(double newDelay) {
+        shootDelay = newDelay;
+    }
+    
+    public double getShootDelay() {
+        return shootDelay;
     }
 
     public void paintComponent(Graphics2D g2d) {
