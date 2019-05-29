@@ -26,7 +26,7 @@ public class Player extends GameComponent {
     protected double ySpeed = 0;
     private ArrayList<Integer> inputs = new ArrayList<>();
     protected Path2D.Double shipBody = new Path2D.Double();
-    protected double maxShootDelay = 15; //The lower the number, the higher the fire rate
+    protected double maxShootDelay = 10; //The lower the number, the higher the fire rate
     protected double shootDelay = 0; //Current shoot delay counter
     
     public Player(int x, int y, Color color, double velocity) {
@@ -65,7 +65,8 @@ public class Player extends GameComponent {
         }
         if (inputs.contains(KeyEvent.VK_SPACE)) { //New Shot fired
             if (shootDelay <= 0) {
-                gui.addPlayerBullet(new Bullet(x, y, Color.BLACK, angle));
+                Bullet bullet = new Bullet(x, y, Color.BLACK, angle);
+                gui.addPlayerBullet(bullet);
                 shootDelay = maxShootDelay;
             }
         }   
