@@ -92,10 +92,11 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     
     public void spawnAsteroid() {
         asteroidDelay++;
-        if (asteroidDelay > maxAsteroidDelay) {
+        System.out.println(asteroidList.size());
+        if (asteroidDelay > maxAsteroidDelay && asteroidList.size() < 25) {
             createAsteroid();
             asteroidDelay = 0;
-            maxAsteroidDelay -= 10;
+            maxAsteroidDelay -= (maxAsteroidDelay > 0) ? 10 : 0;
         }
         //System.out.println(maxAsteroidDelay);
     }

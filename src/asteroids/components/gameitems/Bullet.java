@@ -18,9 +18,8 @@ public class Bullet extends GameComponent {
 
     protected double angle;
     protected double velocity = 6;
-    protected double length = 15;
-    protected double width = 15;
-    protected Ellipse2D.Double bulletBody = new Ellipse2D.Double(x - length / 2, y - width / 2, length, width);
+    protected double r = 5;
+    protected Ellipse2D.Double bulletBody = new Ellipse2D.Double(x - r / 2, y - r / 2, r, r);
     
     public Bullet(double x, double y, Color color, double angle) {
         super(x, y, color);
@@ -38,7 +37,7 @@ public class Bullet extends GameComponent {
             //This makes sure there aren't a billion useless bullets in bulletList
             gui.removePlayerBullet(this);
         }
-        bulletBody = new Ellipse2D.Double(x - length / 2, y - width / 2, length, width);
+        bulletBody = new Ellipse2D.Double(x - r / 2, y - r / 2, r, r);
     }
     
     public Ellipse2D getBody() {
