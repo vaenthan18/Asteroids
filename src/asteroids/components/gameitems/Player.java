@@ -11,6 +11,7 @@ import asteroids.components.GameComponent;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class Player extends GameComponent {
     protected Path2D.Double shipBody = new Path2D.Double();
     protected double maxShootDelay = 10; //The lower the number, the higher the fire rate
     protected double shootDelay = 0; //Current shoot delay counter
+    protected int deaths = 0;
     
     public Player(int x, int y, Color color, double velocity) {
         super(x, y, color);
@@ -47,6 +49,7 @@ public class Player extends GameComponent {
     }
 
     public void update(AsteroidsGUI gui) {
+        collisionCheck(gui);
         if (inputs.contains(KeyEvent.VK_UP)) { //UP
             xSpeed += velocity * Math.cos(Math.toRadians(angle + 90));
             ySpeed += velocity * Math.sin(Math.toRadians(-angle - 90));
@@ -79,6 +82,30 @@ public class Player extends GameComponent {
 
         x = (x < 0 || x > 1000) ? Math.abs(x - 1000) : x;
         y = (y < 0 || y > 600) ? Math.abs(y - 600) : y;
+    }
+    
+    public void collisionCheck(AsteroidsGUI gui) {
+        Area shipArea;
+        Area asteroidArea;
+        Asteroid asteroid;
+        ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
+        boolean hasCollided = false;
+        
+        for (int i = 0; i < asteroidList.size(); i++) {
+            asteroid = asteroidList.get(i);
+            asteroidArea = new Area((Shape) asteroid.getBody());
+            shipArea = new Area((Shape) shipBody);
+
+            shipArea.intersect(asteroidArea); 
+            hasCollided = !shipArea.isEmpty(); 
+            if (hasCollided) {
+                asteroid.shatter(gui);
+                asteroidList.remove(asteroid);
+                deaths++;
+                //System.out.println("Deaths: " + deaths);
+                break;
+            }
+        }
     }
     
     public void setShootDelay(double newDelay) {

@@ -41,7 +41,7 @@ public class Asteroid extends GameComponent {
         collisionCheck(gui);
         move();
         if (isDead()) {
-            createChildAsteroids(gui);
+            shatter(gui);
             gui.removeAsteroid(this);
         }
         
@@ -50,11 +50,15 @@ public class Asteroid extends GameComponent {
         asteroidBody = new Ellipse2D.Double(x, y, radius, radius);
     }
     
-    public void createChildAsteroids(AsteroidsGUI gui) {
+    public void shatter(AsteroidsGUI gui) {
         if (maxHealth > 1) {
             gui.addAsteroid(new Asteroid(x, y - 10, Color.BLACK, angle + 10, maxHealth - 2, radius / 2, velocity + 0.5));
             gui.addAsteroid(new Asteroid(x, y + 10, Color.BLACK, angle - 10, maxHealth - 2, radius / 2, velocity + 0.5));
         }
+    }
+    
+    public Ellipse2D getBody() {
+        return asteroidBody;
     }
     
     public void collisionCheck(AsteroidsGUI gui) {
