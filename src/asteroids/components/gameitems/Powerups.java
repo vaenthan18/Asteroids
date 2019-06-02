@@ -35,13 +35,13 @@ public class Powerups extends GameComponent {
     }
 
     public void update(AsteroidsGUI gui) {
-
+        powerupBody = new Ellipse2D.Double(x, y, radius, radius);
     }
 
     public void paintComponent(Graphics2D g2) {
         g2.setColor(color);
         g2.draw(powerupBody);
-        g2.setColor(Color.GREEN);
+        g2.setColor(color);
         g2.draw(new Area((Shape) powerupBody));
         //System.out.println("paintin!");
     }

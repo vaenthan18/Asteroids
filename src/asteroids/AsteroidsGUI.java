@@ -55,6 +55,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
             }
             for (int i = 0; i < powerupsList.size(); i++) {
                 powerupsList.get(i).update(this);
+                //System.out.println(powerupsList.size());
             }
             spawnAsteroid();
             repaint(); //Draws objects
