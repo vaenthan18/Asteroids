@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import asteroids.components.GameComponent;
 import asteroids.components.gameitems.Asteroid;
 import asteroids.components.gameitems.Bullet;
+import asteroids.components.gameitems.Powerups;
 import asteroids.listeners.MoveListener;
 import asteroids.components.gameitems.Player;
 import java.util.Random;
@@ -19,16 +20,17 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private ArrayList<GameComponent> components = new ArrayList<>();
     private ArrayList<Bullet> bulletList = new ArrayList<>();
     private ArrayList<Asteroid> asteroidList = new ArrayList<>();
+    private ArrayList<Powerups> powerupsList = new ArrayList<>();
     private int frameLength = 1000;
     private int frameHeight = 600;
     private int maxAsteroidDelay = 250;
     private int asteroidDelay = 0;
-    
+
     public Player player = new Player(500, 300, Color.WHITE, .1);
     private boolean running = false;
 
-    
-    
+
+
     public void start() {
         Thread thread = new Thread(this);
         running = true;
@@ -50,6 +52,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
             }
             for (int i = 0; i < asteroidList.size(); i++) { //Don't change this to a for each
                 asteroidList.get(i).update(this); //Updates state of game objects.
+            }
+            for (int i = 0; i < powerupsList.size(); i++) {
+                powerupsList.get(i).update(this);
             }
             spawnAsteroid();
             repaint(); //Draws objects
@@ -88,11 +93,14 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         for (Asteroid i : asteroidList) {
             i.paintComponent(g2);
         }
+        for (Powerups i : powerupsList) {
+            i.paintComponent(g2);
+        }
     }
-    
+
     public void spawnAsteroid() {
         asteroidDelay++;
-        System.out.println(asteroidList.size());
+        //S ystem.out.println(asteroidList.size());
         if (asteroidDelay > maxAsteroidDelay && asteroidList.size() < 25) {
             createAsteroid();
             asteroidDelay = 0;
@@ -100,13 +108,13 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         }
         //System.out.println(maxAsteroidDelay);
     }
-    
+
     public void createAsteroid() {
         //double x, double y, Color color, double angle, double maxHealth, double radius, double velocity
         Random random = new Random();
         int spawnX = random.nextInt(2) == 0 ? 0 : random.nextInt(frameLength);
         int spawnY = spawnX == 0 ? random.nextInt(frameHeight) : 0;
-        
+
         Color spawnColor = Color.BLACK;
         double angle = random.nextInt(360);
         double maxHealth = 5;
@@ -119,27 +127,35 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         //System.out.println(bulletList.size());
         bulletList.add(newBullet);
     }
-    
+
     public void removePlayerBullet(Bullet newBullet) {
         bulletList.remove(newBullet);
     }
-    
+
     public ArrayList getBulletList() {
         return bulletList;
     }
-    
+
+    public ArrayList getPowerupsList() {
+        return powerupsList;
+    }
+
+    public void addPowerup(Powerups powerup) {
+        powerupsList.add(powerup);
+    }
+
     public ArrayList getAsteroidList() {
         return asteroidList;
     }
-    
+
     public void addAsteroid(Asteroid asteroid) {
         asteroidList.add(asteroid);
     }
-    
+
     public void removeAsteroid(Asteroid asteroid) {
         asteroidList.remove(asteroid);
     }
-    
+
     public static void main(String[] args) {
         AsteroidsGUI gui = new AsteroidsGUI(); //MAIN HERE
     }
