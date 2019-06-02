@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import asteroids.components.GameComponent;
 import asteroids.components.gameitems.Asteroid;
 import asteroids.components.gameitems.Bullet;
+import asteroids.components.gameitems.Powerups;
 import asteroids.listeners.MoveListener;
 import asteroids.components.gameitems.Player;
 import java.util.Random;
@@ -19,6 +20,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private ArrayList<GameComponent> components = new ArrayList<>();
     private ArrayList<Bullet> bulletList = new ArrayList<>();
     private ArrayList<Asteroid> asteroidList = new ArrayList<>();
+    private ArrayList<Powerups> powerupsList = new ArrayList<>();
     private int frameLength = 1000;
     private int frameHeight = 600;
     private int maxAsteroidDelay = 250;
@@ -50,6 +52,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
             }
             for (int i = 0; i < asteroidList.size(); i++) { //Don't change this to a for each
                 asteroidList.get(i).update(this); //Updates state of game objects.
+            }
+            for (int i = 0; i < powerupsList.size(); i++) {
+                powerupsList.get(i).update(this);
             }
             spawnAsteroid();
             repaint(); //Draws objects
@@ -88,11 +93,14 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         for (Asteroid i : asteroidList) {
             i.paintComponent(g2);
         }
+        for (Powerups i : powerupsList) {
+            i.paintComponent(g2);
+        }
     }
     
-    public void spawnAsteroid() {
+    public void spawnAsteroidgit () {
         asteroidDelay++;
-        System.out.println(asteroidList.size());
+        //S ystem.out.println(asteroidList.size());
         if (asteroidDelay > maxAsteroidDelay && asteroidList.size() < 25) {
             createAsteroid();
             asteroidDelay = 0;
@@ -127,11 +135,19 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public ArrayList getBulletList() {
         return bulletList;
     }
+
+    public ArrayList getPowerupsList() {
+        return powerupsList;
+    }
+
+    public void addPowerup(Powerups powerup) {
+        powerupsList.add(powerup);
+    }
     
     public ArrayList getAsteroidList() {
         return asteroidList;
     }
-    
+
     public void addAsteroid(Asteroid asteroid) {
         asteroidList.add(asteroid);
     }

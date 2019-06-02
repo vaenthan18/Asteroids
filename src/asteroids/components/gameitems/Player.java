@@ -31,6 +31,7 @@ public class Player extends GameComponent {
 	protected double maxShootDelay = 10; //The lower the number, the higher the fire rate
 	protected double shootDelay = 0; //Current shoot delay counter
 	protected int deaths = 0;
+	protected int bombs = 2;
 
 	public Player(int x, int y, Color color, double velocity) {
 		super(x, y, color);
@@ -98,8 +99,11 @@ public class Player extends GameComponent {
 	public void collisionCheck(AsteroidsGUI gui) {
 		Area shipArea;
 		Area asteroidArea;
+		Area powerupArea;
 		Asteroid asteroid;
+		Powerups powerup;
 		ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
+		ArrayList<Powerups> powerupsList = gui.getPowerupsList();
 		boolean hasCollided = false;
 
 		for (int i = 0; i < asteroidList.size(); i++) {
@@ -115,6 +119,21 @@ public class Player extends GameComponent {
 				deaths++;
 				System.out.println("Deaths: " + deaths);
 				break;
+			}
+		}
+		for (int i = 0; i < powerupsList.size(); i++) {
+			powerup = powerupsList.get(i);
+			powerupArea = new Area((Shape) powerup.getBody());
+			shipArea = new Area((Shape) shipBody);
+			shipArea.intersect(powerupArea);
+			hasCollided = !shipArea.isEmpty();
+			if (hasCollided) {
+				powerupsList.remove(powerup);
+				if (powerup.getType().equals("Health")) {
+					deaths--;
+				} else if (powerup.getType().equals("Bomb")){
+					bombs++;
+				}
 			}
 		}
 	}

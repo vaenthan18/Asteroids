@@ -38,6 +38,14 @@ public class Asteroid extends GameComponent {
         if (isDead()) {
             shatter(gui);
             gui.removeAsteroid(this);
+            int randomInt = (int) (Math.random() * 3 + 1);
+            if (randomInt == 1) {
+                gui.addPowerup(new Powerups(x, y, Color.GREEN, 25, "Health"));
+            } else if (randomInt == 2) {
+                gui.addPowerup(new Powerups(x, y, Color.BLUE, 25, "Bomb"));
+            }
+            System.out.println(randomInt);
+            System.out.println("powerupsList size = " + gui.getPowerupsList().size() + " x " + x + " y " + y);
         }
 
         x = (x < 0 || x > 1000) ? Math.abs(x - 1000) : x;
