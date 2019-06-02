@@ -98,7 +98,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         }
     }
     
-    public void spawnAsteroidgit () {
+    public void spawnAsteroid() {
         asteroidDelay++;
         //S ystem.out.println(asteroidList.size());
         if (asteroidDelay > maxAsteroidDelay && asteroidList.size() < 25) {
