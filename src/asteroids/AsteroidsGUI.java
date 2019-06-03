@@ -6,12 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import asteroids.components.GameComponent;
-import asteroids.components.gameitems.SpaceBackground;
-import asteroids.components.gameitems.Asteroid;
-import asteroids.components.gameitems.Bullet;
-import asteroids.components.gameitems.Powerups;
+import asteroids.components.gameitems.*;
 import asteroids.listeners.MoveListener;
-import asteroids.components.gameitems.Player;
+
 import java.util.Random;
 
 public final class AsteroidsGUI extends JPanel implements Runnable {
@@ -26,6 +23,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private int frameHeight = 600;
     private int maxAsteroidDelay = 250;
     private int asteroidDelay = 0;
+    public static Color bgc = Color.decode("#240046");
 
     private SpaceBackground sbg = new SpaceBackground(this);
     //Has it's own run method for precise twinkle frequency.
@@ -80,13 +78,14 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
         frame.setFocusable(true);
-        asteroidList.add(new Asteroid(750, 250, Color.WHITE, 90, 5, 50, 3));
+        asteroidList.add(new Asteroid(750, 250, bgc, 90, 5, 50, 3));
         start();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+		sbg.paintComponent(g2);
         for (int i = 0; i < components.size(); i++) {
             components.get(i).paintComponent(g2);
         }
@@ -99,8 +98,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         for (int i = 0; i < powerupsList.size(); i++) {
             powerupsList.get(i).paintComponent(g2);
         }
-        sbg.paintComponent(g2);
-        this.setBackground(Color.decode("#240046"));
+        this.setBackground(bgc);
     }
 
     public void spawnAsteroid() {
@@ -117,7 +115,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         int spawnX = random.nextInt(2) == 0 ? 0 : random.nextInt(frameLength);
         int spawnY = spawnX == 0 ? random.nextInt(frameHeight) : 0;
 
-        Color spawnColor = Color.WHITE;
+        Color spawnColor = bgc;
         double angle = random.nextInt(360);
         double maxHealth = 5;
         double radius = 50;
@@ -141,9 +139,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         return powerupsList;
     }
 
-    public void addPowerup(Powerups powerup) {
-        powerupsList.add(powerup);
-    }
+	public void addPowerup(Powerups powerup) {
+		powerupsList.add(powerup);
+	}
 
     public ArrayList getAsteroidList() {
         return asteroidList;

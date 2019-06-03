@@ -53,10 +53,12 @@ public class Asteroid extends GameComponent {
             gui.removeAsteroid(this);
             int randomInt = (int) (Math.random() * 3 + 1);
             if (randomInt == 1 && gui.getPowerupsList().size() < 2) {
-                gui.addPowerup(new Powerups(x, y, Color.GREEN, 25, "Health"));
+                gui.addPowerup(new Powerups(x, y, gui.bgc, 35, PowerupType.HEALTH));
             } else if (randomInt == 2 && gui.getPowerupsList().size() < 2) {
-                gui.addPowerup(new Powerups(x, y, Color.BLUE, 25, "Bomb"));
-            }
+                gui.addPowerup(new Powerups(x, y, gui.bgc, 35, PowerupType.BOMB));
+            } else if (randomInt == 3 && gui.getPowerupsList().size() < 2) {
+				gui.addPowerup(new Powerups(x, y, gui.bgc, 35, PowerupType.SHIELD));
+			}
         }
 
         x = (x < 0 || x > 1000) ? Math.abs(x - 1000) : x;
@@ -66,8 +68,8 @@ public class Asteroid extends GameComponent {
 
     public void shatter(AsteroidsGUI gui) {
         if (maxHealth > 1) {
-            gui.addAsteroid(new Asteroid(x, y - 10, Color.WHITE, angle + 10, maxHealth - 2, radius / 2, velocity + 0.5));
-            gui.addAsteroid(new Asteroid(x, y + 10, Color.WHITE, angle - 10, maxHealth - 2, radius / 2, velocity + 0.5));
+            gui.addAsteroid(new Asteroid(x, y - 10, gui.bgc, angle + 10, maxHealth - 2, radius / 2, velocity + 0.5));
+            gui.addAsteroid(new Asteroid(x, y + 10, gui.bgc, angle - 10, maxHealth - 2, radius / 2, velocity + 0.5));
         }
     }
 
@@ -111,7 +113,7 @@ public class Asteroid extends GameComponent {
         g2.draw(asteroidBody);
         g2.draw(new Area((Shape) asteroidBody));
 		AffineTransform tx = new AffineTransform();
-		tx.scale(radius / 50.0, radius / 50.0);
+		tx.scale(radius / asteroidImg.getWidth(), radius / asteroidImg.getHeight());
 		tx.rotate(Math.toRadians(rotation), asteroidImg.getWidth() / 2.0, asteroidImg.getHeight() / 2.0);
 		rotation += Math.toRadians(45);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);

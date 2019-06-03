@@ -8,11 +8,17 @@ package asteroids.components.gameitems;
 import asteroids.components.GameComponent;
 import asteroids.AsteroidsGUI;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 /**
- *
  * @author vaenthan
  */
 public class Powerups extends GameComponent {
@@ -22,16 +28,28 @@ public class Powerups extends GameComponent {
 	protected Color color;
 	protected double radius;
 	protected Ellipse2D.Double powerupBody = new Ellipse2D.Double(x, y, radius, radius);
-	protected String type;
+	protected PowerupType type;
 	protected Boolean collided = false;
+	private static BufferedImage image = null;
 
-	public Powerups(double x, double y, Color color, double radius, String type) {
+	public Powerups(double x, double y, Color color, double radius, PowerupType type) {
 		super(x, y, color);
 		this.x = x;
 		this.y = y;
 		this.color = color;
 		this.radius = radius;
 		this.type = type;
+		try {
+			if (type == PowerupType.BOMB) {
+				image = ImageIO.read(new File("Images/bomb.png"));
+			} else if (type == PowerupType.SHIELD) {
+				image = ImageIO.read(new File("Images/shield.png"));
+			} else {
+				image = ImageIO.read(new File("Images/health.png"));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void update(AsteroidsGUI gui) {
@@ -41,16 +59,19 @@ public class Powerups extends GameComponent {
 	public void paintComponent(Graphics2D g2) {
 		g2.setColor(color);
 		g2.draw(powerupBody);
-		g2.setColor(Color.GREEN);
 		g2.draw(new Area((Shape) powerupBody));
-		//System.out.println("paintin!");
+
+		AffineTransform tx = new AffineTransform();
+		tx.scale(radius / image.getWidth(), radius / image.getHeight());
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		g2.drawImage(image, op, (int)x, (int)y);
 	}
 
 	public Ellipse2D getBody() {
 		return powerupBody;
 	}
 
-	public String getType() {
+	public PowerupType getType() {
 		return type;
 	}
 }
