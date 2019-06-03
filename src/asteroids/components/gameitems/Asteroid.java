@@ -4,7 +4,6 @@ import asteroids.AsteroidsGUI;
 import asteroids.components.GameComponent;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
@@ -44,8 +43,6 @@ public class Asteroid extends GameComponent {
             } else if (randomInt == 2) {
                 gui.addPowerup(new Powerups(x, y, Color.BLUE, 25, "Bomb"));
             }
-            System.out.println(randomInt);
-            System.out.println("powerupsList size = " + gui.getPowerupsList().size() + " x " + x + " y " + y);
         }
 
         x = (x < 0 || x > 1000) ? Math.abs(x - 1000) : x;
@@ -55,8 +52,8 @@ public class Asteroid extends GameComponent {
 
     public void shatter(AsteroidsGUI gui) {
         if (maxHealth > 1) {
-            gui.addAsteroid(new Asteroid(x, y - 10, Color.BLACK, angle + 10, maxHealth - 2, radius / 2, velocity + 0.5));
-            gui.addAsteroid(new Asteroid(x, y + 10, Color.BLACK, angle - 10, maxHealth - 2, radius / 2, velocity + 0.5));
+            gui.addAsteroid(new Asteroid(x, y - 10, Color.WHITE, angle + 10, maxHealth - 2, radius / 2, velocity + 0.5));
+            gui.addAsteroid(new Asteroid(x, y + 10, Color.WHITE, angle - 10, maxHealth - 2, radius / 2, velocity + 0.5));
         }
     }
 
@@ -98,18 +95,6 @@ public class Asteroid extends GameComponent {
     public void paintComponent(Graphics2D g2) {
         g2.setColor(color);
         g2.draw(asteroidBody);
-        g2.setColor(Color.red);
-        //g2.draw(asteroidBody.getBounds());
-        Rectangle approximation = new Rectangle();
-        //System.out.println(x + "," + y);
-        /*approximation.add(new Point((int) x + 25, (int) y + 50));
-        approximation.add(new Point((int) x + 50, (int) y + 25));
-        approximation.add(new Point((int) x + 25, (int) y + 0));
-        approximation.add(new Point((int) x + 0, (int) y + 25));
-        */
-        approximation.add(200, 200);
-        approximation.add(200, 100);
-        //g2.draw(approximation);
         g2.draw(new Area((Shape) asteroidBody));
     }
 }

@@ -21,17 +21,17 @@ public class MoveListener extends KeyAdapter {
     }
 
     public void keyPressed(KeyEvent k) {
-		if (!keysPressed.contains(k.getKeyCode())) {
-			keysPressed.add(k.getKeyCode());
-		}
+        if (!keysPressed.contains(k.getKeyCode())) {
+            keysPressed.add(k.getKeyCode());
+        }
 
-		gui.player.updateMovementInputs(keysPressed);
+        gui.player.updateMovementInputs(keysPressed);
     }
 
-	public void keyReleased(KeyEvent k) {
-		if (keysPressed.contains(k.getKeyCode())) {
-			keysPressed.remove(keysPressed.indexOf(k.getKeyCode()));
-		}
-		gui.player.updateMovementInputs(keysPressed);
-	}
+    public void keyReleased(KeyEvent k) {
+        if (keysPressed.contains(k.getKeyCode())) {
+            keysPressed.remove(keysPressed.indexOf(k.getKeyCode()));
+        }
+        gui.player.updateMovementInputs(keysPressed);
+    }
 }

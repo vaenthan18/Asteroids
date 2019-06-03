@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import asteroids.components.GameComponent;
+import asteroids.components.gameitems.SpaceBackground;
 import asteroids.components.gameitems.Asteroid;
 import asteroids.components.gameitems.Bullet;
 import asteroids.components.gameitems.Powerups;
@@ -26,6 +27,10 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private int maxAsteroidDelay = 250;
     private int asteroidDelay = 0;
 
+    private SpaceBackground sbg = new SpaceBackground(this);
+    //Has it's own run method for precise twinkle frequency.
+    //Also doesn't get painted in an arraylist.
+    
     public Player player = new Player(500, 300, Color.WHITE, .1);
     private boolean running = false;
 
@@ -67,8 +72,6 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 
     public AsteroidsGUI() {
         // Add the plane and control panels to the main panel
-        //JPanel mainPanel = new JPanel();
-        //mainPanel.add(space);
         components.add(player);
         // Configure the frame
         frame.addKeyListener(new MoveListener(this));
@@ -77,45 +80,44 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(this);
         frame.setFocusable(true);
-        asteroidList.add(new Asteroid(750, 250, Color.BLACK, 90, 5, 50, 3));
+        asteroidList.add(new Asteroid(750, 250, Color.WHITE, 90, 5, 50, 3));
         start();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        for (GameComponent i : components) {
-            i.paintComponent(g2);
+        for (int i = 0; i < components.size(); i++) {
+            components.get(i).paintComponent(g2); 
         }
-        for (Bullet i : bulletList) {
-            i.paintComponent(g2); //Paints state of Bullets.
+        for (int i = 0; i < bulletList.size(); i++) {
+            bulletList.get(i).paintComponent(g2); //Paints state of Bullets.
         }
-        for (Asteroid i : asteroidList) {
-            i.paintComponent(g2);
+        for (int i = 0; i < asteroidList.size(); i++) {
+            asteroidList.get(i).paintComponent(g2);
         }
-        for (Powerups i : powerupsList) {
-            i.paintComponent(g2);
+        for (int i = 0; i < powerupsList.size(); i++) {
+            powerupsList.get(i).paintComponent(g2);
         }
+        sbg.paintComponent(g2);
+        this.setBackground(Color.BLACK);
     }
 
     public void spawnAsteroid() {
         asteroidDelay++;
-        //S ystem.out.println(asteroidList.size());
         if (asteroidDelay > maxAsteroidDelay && asteroidList.size() < 25) {
             createAsteroid();
             asteroidDelay = 0;
             maxAsteroidDelay -= (maxAsteroidDelay > 0) ? 10 : 0;
         }
-        //System.out.println(maxAsteroidDelay);
     }
 
     public void createAsteroid() {
-        //double x, double y, Color color, double angle, double maxHealth, double radius, double velocity
         Random random = new Random();
         int spawnX = random.nextInt(2) == 0 ? 0 : random.nextInt(frameLength);
         int spawnY = spawnX == 0 ? random.nextInt(frameHeight) : 0;
 
-        Color spawnColor = Color.BLACK;
+        Color spawnColor = Color.WHITE;
         double angle = random.nextInt(360);
         double maxHealth = 5;
         double radius = 50;
@@ -124,7 +126,6 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     }
 
     public void addPlayerBullet(Bullet newBullet) {
-        //System.out.println(bulletList.size());
         bulletList.add(newBullet);
     }
 
@@ -154,6 +155,14 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 
     public void removeAsteroid(Asteroid asteroid) {
         asteroidList.remove(asteroid);
+    }
+    
+    public int getFrameLength() {
+        return frameLength;
+    }
+    
+    public int getFrameHeight() {
+        return frameHeight;
     }
 
     public static void main(String[] args) {
