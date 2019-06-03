@@ -8,11 +8,17 @@ package asteroids.components.gameitems;
 import asteroids.AsteroidsGUI;
 import asteroids.components.GameComponent;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Path2D;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.Buffer;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
@@ -30,12 +36,20 @@ public class Player extends GameComponent {
     protected Path2D.Double shipBody = new Path2D.Double();
     protected double maxShootDelay = 10; //The lower the number, the higher the fire rate
     protected double shootDelay = 0; //Current shoot delay counter
-    protected int deaths = 0;
+    protected int lives = 3;
     protected int bombs = 2;
+    private static BufferedImage img;
+    private static File shipImg = new File("Images/ship.png");
+	private static File shipImgMoving = new File("Images/shipfire.png");
 
     public Player(int x, int y, Color color, double velocity) {
         super(x, y, color);
         this.velocity = velocity;
+        try {
+            img = ImageIO.read(shipImg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void updateMovementInputs(ArrayList<Integer> newInputs) {
@@ -45,9 +59,19 @@ public class Player extends GameComponent {
     public void updatePoints() {
         shipBody.reset();
         shipBody.moveTo(x, y);
-        shipBody.lineTo(x + 10, y + 30);
-        shipBody.lineTo(x + 0, y + 20);
-        shipBody.lineTo(x - 10, y + 30);
+        shipBody.lineTo(x + 8, y + 12);
+        shipBody.lineTo(x + 16, y + 15);
+        shipBody.lineTo(x + 16, y + 22);
+        shipBody.lineTo(x + 10, y + 20);
+        shipBody.lineTo(x + 6, y + 22);
+        shipBody.lineTo(x + 2, y + 20);
+        shipBody.lineTo(x, y + 21);
+        shipBody.lineTo(x - 2, y + 20);
+        shipBody.lineTo(x - 6, y + 22);
+        shipBody.lineTo(x - 10, y + 20);
+        shipBody.lineTo(x - 16, y + 22);
+        shipBody.lineTo(x - 16, y + 15);
+        shipBody.lineTo(x - 8, y + 12);
     }
 
     public void update(AsteroidsGUI gui) {
@@ -65,7 +89,17 @@ public class Player extends GameComponent {
                     ySpeed = speedLimit * Math.sin(Math.toRadians(-angle - 90));
                 }
             }
-        } else {
+            try {
+            	img = ImageIO.read(shipImgMoving);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				img = ImageIO.read(shipImg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
             double a = (xSpeed == 0) ? 0 : (ySpeed == 0 ? Math.PI / 2 : Math.atan(xSpeed / ySpeed) + (ySpeed > 0 ? Math.PI : 0));
             double speed = Math.sqrt(Math.pow(xSpeed, 2) + Math.pow(ySpeed, 2)) - velocity / 6;
             speed = (speed < velocity / 6) ? 0 : speed;
@@ -116,8 +150,8 @@ public class Player extends GameComponent {
             if (hasCollided) {
                 asteroid.shatter(gui);
                 asteroidList.remove(asteroid);
-                deaths++;
-                System.out.println("Deaths: " + deaths);
+                lives--;
+                System.out.println("Lives: " + lives);
                 break;
             }
         }
@@ -130,7 +164,7 @@ public class Player extends GameComponent {
             if (hasCollided) {
                 powerupsList.remove(powerup);
                 if (powerup.getType().equals("Health")) {
-                    deaths--;
+                    lives++;
                 } else if (powerup.getType().equals("Bomb")) {
                     bombs++;
                 }
@@ -149,11 +183,17 @@ public class Player extends GameComponent {
     public void paintComponent(Graphics2D g2d) {
         updatePoints();
 
-        AffineTransform tx = new AffineTransform();
-        tx.rotate(Math.toRadians(-angle), x, y);
-        Shape newShape = tx.createTransformedShape(shipBody);
+		AffineTransform tx = new AffineTransform();
+		AffineTransform a = new AffineTransform();
+		//tx.rotate(Math.toRadians(-angle), x, y);
+		tx.translate(-img.getWidth() / 2.0, 0);
+		tx.rotate(Math.toRadians(-angle), img.getWidth() / 2.0, 0);
+		a.rotate(Math.toRadians(-angle), x, y);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+        Shape newShape = a.createTransformedShape(shipBody);
         shipBody = (Path2D.Double) newShape;
-        g2d.setColor(Color.RED);
-        g2d.fill(newShape);
+        g2d.setColor(Color.BLACK);
+		g2d.drawImage(img, op, (int)x, (int)y);
     }
 }

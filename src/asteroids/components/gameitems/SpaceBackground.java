@@ -13,17 +13,14 @@ import java.awt.geom.Ellipse2D;
 
 public class SpaceBackground extends GameComponent implements Runnable {
 
-    private int length;
-    private int height;
     private int interval = 10; //Higher number == less stars //Imo 5 is the best, but much slower
     private int rows;
     private int columns;
     private boolean running = false;
-    private Ellipse2D.Double test = new Ellipse2D.Double(500, 250, 0, 0);
     private AsteroidsGUI gui;
     
     private Ellipse2D[][] stars;
-    
+
     public void start() {
         Thread thread = new Thread(this);
         running = true;
@@ -49,8 +46,8 @@ public class SpaceBackground extends GameComponent implements Runnable {
         super(0, 0, Color.WHITE);
         
         this.gui = gui;
-        length = gui.getFrameLength();
-        height = gui.getFrameHeight();
+        int length = gui.getFrameLength();
+        int height = gui.getFrameHeight();
         rows = length / interval;
         columns = height / interval;
         
@@ -67,7 +64,7 @@ public class SpaceBackground extends GameComponent implements Runnable {
             }
         }
     }
-    
+
     public void flicker() {
         for (int i = 0; i < stars.length; i++) {
             for (int j = 0; j < stars[i].length; j++) {

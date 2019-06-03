@@ -88,7 +88,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         for (int i = 0; i < components.size(); i++) {
-            components.get(i).paintComponent(g2); 
+            components.get(i).paintComponent(g2);
         }
         for (int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).paintComponent(g2); //Paints state of Bullets.
@@ -100,12 +100,12 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
             powerupsList.get(i).paintComponent(g2);
         }
         sbg.paintComponent(g2);
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.decode("#240046"));
     }
 
     public void spawnAsteroid() {
         asteroidDelay++;
-        if (asteroidDelay > maxAsteroidDelay && asteroidList.size() < 25) {
+        if (asteroidDelay > maxAsteroidDelay && asteroidList.size() < 15) {
             createAsteroid();
             asteroidDelay = 0;
             maxAsteroidDelay -= (maxAsteroidDelay > 0) ? 10 : 0;

@@ -2,11 +2,18 @@ package asteroids.components.gameitems;
 
 import asteroids.AsteroidsGUI;
 import asteroids.components.GameComponent;
+
+import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +27,9 @@ public class Asteroid extends GameComponent {
     protected double radius;
     protected Ellipse2D.Double asteroidBody = new Ellipse2D.Double(x, y, radius, radius);
     protected double angle;
+    protected double rotation = 0;
     protected double velocity;
+    private BufferedImage asteroidImg;
 
     public Asteroid(double x, double y, Color color, double angle, double maxHealth, double radius, double velocity) {
         super(x, y, color);
@@ -29,6 +38,11 @@ public class Asteroid extends GameComponent {
         this.maxHealth = maxHealth;
         this.velocity = velocity;
         health = maxHealth;
+        try {
+            asteroidImg = ImageIO.read(new File("Images/asteroid.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update(AsteroidsGUI gui) {
@@ -38,9 +52,9 @@ public class Asteroid extends GameComponent {
             shatter(gui);
             gui.removeAsteroid(this);
             int randomInt = (int) (Math.random() * 3 + 1);
-            if (randomInt == 1) {
+            if (randomInt == 1 && gui.getPowerupsList().size() < 2) {
                 gui.addPowerup(new Powerups(x, y, Color.GREEN, 25, "Health"));
-            } else if (randomInt == 2) {
+            } else if (randomInt == 2 && gui.getPowerupsList().size() < 2) {
                 gui.addPowerup(new Powerups(x, y, Color.BLUE, 25, "Bomb"));
             }
         }
@@ -96,5 +110,11 @@ public class Asteroid extends GameComponent {
         g2.setColor(color);
         g2.draw(asteroidBody);
         g2.draw(new Area((Shape) asteroidBody));
+		AffineTransform tx = new AffineTransform();
+		tx.scale(radius / 50.0, radius / 50.0);
+		tx.rotate(Math.toRadians(rotation), asteroidImg.getWidth() / 2.0, asteroidImg.getHeight() / 2.0);
+		rotation += Math.toRadians(45);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+        g2.drawImage(asteroidImg, op, (int)x, (int)y);
     }
 }
