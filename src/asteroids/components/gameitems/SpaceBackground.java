@@ -21,9 +21,9 @@ public class SpaceBackground extends GameComponent implements Runnable {
     private boolean running = false;
     private Ellipse2D.Double test = new Ellipse2D.Double(500, 250, 0, 0);
     private AsteroidsGUI gui;
-    
+    private boolean openStar = false;
     private Ellipse2D[][] stars;
-    
+
     public void start() {
         Thread thread = new Thread(this);
         running = true;
@@ -37,27 +37,26 @@ public class SpaceBackground extends GameComponent implements Runnable {
     public void run() {
         while (running) {
             update(gui);
-            //repaint(); //Draws objects
             try {
                 Thread.sleep(1500);
             } catch (Exception e) {
             }
         }
     }
-    
+
     public SpaceBackground(AsteroidsGUI gui) {
         super(0, 0, Color.WHITE);
-        
+
         this.gui = gui;
         length = gui.getFrameLength();
         height = gui.getFrameHeight();
         rows = length / interval;
         columns = height / interval;
-        
+
         makeStars();
         start();
     }
-    
+
     public void makeStars() {
         stars = new Ellipse2D[rows][columns];
         for (int i = 0; i < stars.length; i++) {
@@ -67,7 +66,7 @@ public class SpaceBackground extends GameComponent implements Runnable {
             }
         }
     }
-    
+
     public void flicker() {
         for (int i = 0; i < stars.length; i++) {
             for (int j = 0; j < stars[i].length; j++) {
@@ -81,21 +80,16 @@ public class SpaceBackground extends GameComponent implements Runnable {
             }
         }
     }
-    
+
     public void update(AsteroidsGUI gui) {
         flicker();
     }
-    
+
     public void paintComponent(Graphics2D g2) {
         g2.setColor(color);
         for (int i = 0; i < stars.length; i++) {
             for (int j = 0; j < stars[i].length; j++) {
-                int random = (int) (Math.random() * 10);
-                if (random < 7) {
-                    g2.fill(stars[i][j]);
-                } else if (stars[i][j].getHeight() != 0) {
-                    g2.draw(stars[i][j]);
-                }
+                g2.fill(stars[i][j]);
             }
         }
     }
