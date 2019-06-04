@@ -30,7 +30,7 @@ public class Powerups extends GameComponent {
 	protected Ellipse2D.Double powerupBody = new Ellipse2D.Double(x, y, radius, radius);
 	protected PowerupType type;
 	protected Boolean collided = false;
-	private static BufferedImage image = null;
+	protected BufferedImage image = null;
 
 	public Powerups(double x, double y, Color color, double radius, PowerupType type) {
 		super(x, y, color);
