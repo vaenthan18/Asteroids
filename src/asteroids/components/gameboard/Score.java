@@ -19,15 +19,17 @@ public class Score extends JPanel{
     public static Color bgc = Color.decode("#240046");
 
     public Score(JFrame frame, AsteroidsGUI gui) {
-        //Menu creation
+        //basic background and layout
         this.setLayout(null);
         this.setBackground(bgc);
 
+        //title creation
         JLabel title = new JLabel("SCOREBOARD", SwingConstants.CENTER);
         title.setBounds(300, 25, 400, 50);
         title.setForeground(Color.WHITE);
         title.setFont(new Font("Courier", Font.PLAIN, 40));
 
+        //button functionality
         MouseClickListener buttonPressed = new MouseClickListener(gui);
 
         JButton scoreButton = new JButton("RETURN");
@@ -40,6 +42,7 @@ public class Score extends JPanel{
         scoreButton.addActionListener(buttonPressed);
         scoreButton.setActionCommand("return");
 
+        //adding components to JPanel
         this.add(scoreButton);
         this.add(title);
     }

@@ -16,11 +16,13 @@ public class MainMenu extends JPanel {
         this.setLayout(null);
         this.setBackground(bgc);
 
+        //title creation
         JLabel title = new JLabel("ASTEROIDS", SwingConstants.CENTER);
         title.setBounds(350, 100, 300, 100);
         title.setForeground(Color.WHITE);
         title.setFont(new Font("Courier", Font.PLAIN, 55));
 
+        //button functionality added
         MouseClickListener buttonPressed = new MouseClickListener(gui);
 
         JButton startButton = new JButton("START");
@@ -45,6 +47,7 @@ public class MainMenu extends JPanel {
 
         JLabel shopButton = new JLabel("Shop");
 
+        //adding components to the JPanel
         this.add(startButton);
         this.add(scoreButton);
         this.add(title);

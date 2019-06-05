@@ -1,6 +1,7 @@
 package asteroids;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -8,9 +9,9 @@ import asteroids.components.GameComponent;
 import asteroids.components.gameboard.Score;
 import asteroids.components.gameitems.*;
 import asteroids.listeners.MoveListener;
-import asteroids.listeners.MouseClickListener;
 import asteroids.components.gameboard.MainMenu;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public final class AsteroidsGUI extends JPanel implements Runnable {
@@ -26,6 +27,10 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private int maxAsteroidDelay = 250;
     private int asteroidDelay = 0;
     public static Color bgc = Color.decode("#240046");
+    //lives, bombs, score.
+    private static int[] playerData = {3, 2, 0};
+    private static String[] playerNames = new String[10];
+    private static int[] playerScores = new int[10];
 
     private SpaceBackground sbg = new SpaceBackground(this);
     //Has it's own run method for precise twinkle frequency.
@@ -34,10 +39,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public Player player = new Player(500, 300, Color.WHITE, .1);
     private boolean running = false;
 
-
-
     public void start() {
         //When the start button is clicked the menu is deleted and the game is added
+        reset();
         running = true;
         frame.addKeyListener(new MoveListener(this));
         frame.getContentPane().removeAll();
@@ -49,8 +53,44 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         components.add(player);
         System.out.println("houoio");
         asteroidList.add(new Asteroid(750, 250, bgc, 90, 5, 50, 3));
+        readScores();
         Thread thread = new Thread(this);
         thread.start();
+    }
+
+    public void readScores() {
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("scores.txt"));
+            for (int i = 0; i < 10 ; i++) {
+                playerNames[i] = in.readLine();
+                playerScores[i] = Integer.valueOf(in.readLine());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printScores() {
+        int position = Arrays.binarySearch(playerScores, playerData[2]);
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("scores.txt")));
+            out.println("placeholder");
+            out.println(playerData[2]);
+            out.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reset() {
+        player = new Player(500, 300, Color.WHITE, .1);
+        bulletList.clear();
+        components.clear();
+        asteroidList.clear();
+        powerupsList.clear();
+        playerData[0] = 3;
+        playerData[1] = 2;
+        playerData[2] = 0;
     }
 
     public void stop() {
@@ -59,6 +99,12 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 
     public void run() {
         while (running) {
+            //check if game is over
+            if (playerData[0] <= 0) {
+                makeScoreboard();
+                stop();
+                break;
+            }
             // Check for collision, draw objects and sleep
             for (GameComponent i : components) {
                 i.update(this); //Updates state of game objects.
@@ -202,4 +248,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         //makeMenu();
         AsteroidsGUI gui = new AsteroidsGUI(); //MAIN HERE
     }
+
+    public static int[] getPlayerData() {
+        return playerData;
+    }
+
 }

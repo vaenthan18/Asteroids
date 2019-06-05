@@ -59,6 +59,13 @@ public class Asteroid extends GameComponent {
             } else if (randomInt == 3 && gui.getPowerupsList().size() < 2) {
 				gui.addPowerup(new Powerups(x, y, gui.bgc, 35, PowerupType.SHIELD));
 			}
+            if (maxHealth == 5) {
+                asteroids.AsteroidsGUI.getPlayerData()[2] += 100;
+            } else if (maxHealth == 3) {
+                asteroids.AsteroidsGUI.getPlayerData()[2] += 300;
+            } else if (maxHealth == 1) {
+                asteroids.AsteroidsGUI.getPlayerData()[1] += 500;
+            }
         }
 
         x = (x < 0 || x > 1000) ? Math.abs(x - 1000) : x;
@@ -119,4 +126,5 @@ public class Asteroid extends GameComponent {
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
         g2.drawImage(asteroidImg, op, (int)x, (int)y);
     }
+
 }
