@@ -26,7 +26,7 @@ public class Score extends JPanel{
         JLabel title = new JLabel("SCOREBOARD", SwingConstants.CENTER);
         title.setBounds(300, 25, 400, 50);
         title.setForeground(Color.WHITE);
-        title.setFont(new Font("Courier", Font.PLAIN, 40));
+        title.setFont(new Font("Helvetica", Font.BOLD, 40));
 
         MouseClickListener buttonPressed = new MouseClickListener(gui);
 
@@ -36,7 +36,7 @@ public class Score extends JPanel{
         scoreButton.setForeground(Color.WHITE);
         scoreButton.setOpaque(true);
         scoreButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-        scoreButton.setFont(new Font("Courier", Font.PLAIN, 20));
+        scoreButton.setFont(new Font("Helvetica", Font.PLAIN, 20));
         scoreButton.addActionListener(buttonPressed);
         scoreButton.setActionCommand("return");
 

@@ -2,7 +2,6 @@ package asteroids.components.gameitems;
 
 import asteroids.AsteroidsGUI;
 import asteroids.components.GameComponent;
-
 import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics2D;

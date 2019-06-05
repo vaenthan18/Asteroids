@@ -4,8 +4,12 @@ package asteroids.components.gameboard;
 import asteroids.AsteroidsGUI;
 import asteroids.listeners.MouseClickListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainMenu extends JPanel {
 
@@ -14,13 +18,23 @@ public class MainMenu extends JPanel {
     public MainMenu(JFrame frame, AsteroidsGUI gui) {
         //Menu creation
         this.setLayout(null);
-        this.setBackground(bgc);
+        this.setBackground(Color.getColor("#"));
 
+		BufferedImage before = null;
+		try {
+			before = ImageIO.read(new File("Images/title.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		JLabel title = new JLabel(new ImageIcon(before));
+		title.setBounds(200, 100, 600, 200);
+		this.add(title);
+/*
         JLabel title = new JLabel("ASTEROIDS", SwingConstants.CENTER);
-        title.setBounds(350, 100, 300, 100);
         title.setForeground(Color.WHITE);
         title.setFont(new Font("Courier", Font.PLAIN, 55));
-
+*/
         MouseClickListener buttonPressed = new MouseClickListener(gui);
 
         JButton startButton = new JButton("START");
@@ -29,7 +43,7 @@ public class MainMenu extends JPanel {
         startButton.setForeground(Color.WHITE);
         startButton.setOpaque(true);
         startButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-        startButton.setFont(new Font("Courier", Font.PLAIN, 20));
+        startButton.setFont(new Font("Helvetica", Font.PLAIN, 20));
         startButton.addActionListener(buttonPressed);
         startButton.setActionCommand("start");
 
@@ -39,7 +53,7 @@ public class MainMenu extends JPanel {
         scoreButton.setForeground(Color.WHITE);
         scoreButton.setOpaque(true);
         scoreButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-        scoreButton.setFont(new Font("Courier", Font.PLAIN, 20));
+        scoreButton.setFont(new Font("Helvetica", Font.PLAIN, 20));
         scoreButton.addActionListener(buttonPressed);
         scoreButton.setActionCommand("score");
 
@@ -47,6 +61,5 @@ public class MainMenu extends JPanel {
 
         this.add(startButton);
         this.add(scoreButton);
-        this.add(title);
     }
 }

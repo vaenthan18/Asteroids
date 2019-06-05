@@ -18,8 +18,6 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**
@@ -36,8 +34,7 @@ public class Player extends GameComponent {
     protected Path2D.Double shipBody = new Path2D.Double();
     protected double maxShootDelay = 10; //The lower the number, the higher the fire rate
     protected double shootDelay = 0; //Current shoot delay counter
-    protected int lives = 3;
-    protected int bombs = 2;
+    protected int[] playerData;
     private static BufferedImage img;
     private static File shipImg = new File("Images/ship.png");
 	private static File shipImgMoving = new File("Images/shipfire.png");
@@ -131,6 +128,7 @@ public class Player extends GameComponent {
     }
 
     public void collisionCheck(AsteroidsGUI gui) {
+        playerData = AsteroidsGUI.getPlayerData();
         Area shipArea;
         Area asteroidArea;
         Area powerupArea;
@@ -150,11 +148,30 @@ public class Player extends GameComponent {
             if (hasCollided) {
                 asteroid.shatter(gui);
                 asteroidList.remove(asteroid);
-                lives--;
-                System.out.println("Lives: " + lives);
+                playerData[0]--;
+                System.out.println("Lives: " + playerData[0]);
                 break;
             }
         }
+        Area bulletArea;
+        Bullet bullet;
+        ArrayList<Bullet> bulletList = gui.getEnemyBulletsList();
+
+        for (int i = 0; i < bulletList.size(); i++) {
+            bullet = bulletList.get(i);
+            bulletArea = new Area((Shape) bullet.getBody());
+            shipArea = new Area((Shape) shipBody);
+
+            shipArea.intersect(bulletArea);
+            hasCollided = !shipArea.isEmpty();
+            if (hasCollided) {
+                bulletList.remove(bullet);
+                playerData[0]--;
+                System.out.println("Lives: " + playerData[0]);
+                break;
+            }
+        }
+
         for (int i = 0; i < powerupsList.size(); i++) {
             powerup = powerupsList.get(i);
             powerupArea = new Area((Shape) powerup.getBody());
@@ -164,9 +181,9 @@ public class Player extends GameComponent {
             if (hasCollided) {
                 powerupsList.remove(powerup);
                 if (powerup.getType().equals("Health")) {
-                    lives++;
+                    playerData[0]++;
                 } else if (powerup.getType().equals("Bomb")) {
-                    bombs++;
+                    playerData[1]++;
                 }
             }
         }
