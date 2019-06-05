@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import asteroids.components.GameComponent;
+import asteroids.components.gameboard.Score;
 import asteroids.components.gameitems.*;
 import asteroids.listeners.MoveListener;
 import asteroids.listeners.MouseClickListener;
@@ -38,6 +39,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public void start() {
         //When the start button is clicked the menu is deleted and the game is added
         running = true;
+        frame.addKeyListener(new MoveListener(this));
         frame.getContentPane().removeAll();
         frame.remove(frame.getContentPane());
         frame.add(this);
@@ -79,16 +81,34 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         }
     }
 
+    public void makeScoreboard() {
+        Score newBoard = new Score(frame, this);
+        frame.getContentPane().removeAll();
+        frame.remove(frame.getContentPane());
+        frame.add(newBoard);
+        frame.setContentPane(newBoard);
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    public void makeMenu() {
+        MainMenu menu = new MainMenu(frame, this);
+        frame.getContentPane().removeAll();
+        frame.remove(frame.getContentPane());
+        frame.add(menu);
+        frame.setContentPane(menu);
+        frame.repaint();
+        frame.revalidate();
+    }
+
     public AsteroidsGUI() {
         // Add the plane and control panels to the main panel
-        components.add(player);
         // Configure the frame
-        frame.addKeyListener(new MoveListener(this));
         frame.setVisible(true);
         frame.setSize(frameLength, frameHeight);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Start with the menu
-        frame.add(new MainMenu(frame, this));
+        makeMenu();
         frame.setFocusable(true);
     }
 
