@@ -5,9 +5,10 @@
  */
 package asteroids.listeners;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import asteroids.AsteroidsGUI;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -25,6 +26,7 @@ public class MouseClickListener implements ActionListener {
         if ("start".equals(e.getActionCommand())) {
             gui.start();
             System.out.println("starting!");
+            gui.menu = false;
         } else if ("score".equals(e.getActionCommand())) {
             gui.makeScoreboard();
             System.out.println("haha not implemented yet");
