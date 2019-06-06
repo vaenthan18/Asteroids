@@ -26,7 +26,7 @@ public class MouseClickListener implements ActionListener {
         if ("start".equals(e.getActionCommand())) {
             gui.start();
             System.out.println("starting!");
-            gui.menu = false;
+            //gui.menu = false;
         } else if ("score".equals(e.getActionCommand())) {
             gui.makeScoreboard();
             System.out.println("haha not implemented yet");

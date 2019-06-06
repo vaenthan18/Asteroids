@@ -27,7 +27,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private int frameHeight = 600;
     private int maxAsteroidDelay = 250;
     private int asteroidDelay = 0;
-    public static Color bgc = Color.decode("#240046");
+    public static Color bgc = Color.decode("#000c28");
 
 	private static int[] playerData = {3, 2, 0};
 

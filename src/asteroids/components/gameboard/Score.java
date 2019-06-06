@@ -17,7 +17,7 @@ import java.awt.*;
  */
 public class Score extends JPanel{
 
-    public static Color bgc = Color.decode("#240046");
+    public static Color bgc = Color.decode("#000c28");
     public static String[][] scoreArray = new String[10][2];
     public static JLabel[][] jlabelArray = new JLabel[10][2];
 
