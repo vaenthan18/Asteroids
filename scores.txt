@@ -1,3 +1,9 @@
+Killer
+2600
+placeholderName
+1400
+Daniel
+1400
 placeholderName
 900
 placeholderName
@@ -12,9 +18,3 @@ placeholderName
 100
 placeholderName
 100
-placeholderName
-100
-~empty~
-0
-~empty~
-0

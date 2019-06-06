@@ -3,6 +3,7 @@ package asteroids;
 import asteroids.components.GameComponent;
 import asteroids.components.gameboard.MainMenu;
 import asteroids.components.gameboard.Score;
+import asteroids.components.gameboard.ScoreMenu;
 import asteroids.components.gameitems.*;
 import asteroids.listeners.MoveListener;
 
@@ -105,11 +106,8 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public void run() {
         while (running) {
 			if (playerData[0] <= 0) {
-			    scoreData.add(new ScoreData("placeholderName", playerData[2]));
-			    Collections.sort(scoreData);
-                printScores();
-				makeScoreboard();
 				stop();
+				makeScoreMenu();
 				break;
 			}
             // Check for collision, draw objects and sleep
@@ -138,6 +136,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     }
 
     public void makeScoreboard() {
+        //setup of the scoreboard (clears board, gets scores)
         readScores();
         Score newBoard = new Score(this);
         frame.getContentPane().removeAll();
@@ -149,11 +148,23 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     }
 
     public void makeMenu() {
+        //makes menu - clear board, make menu, etc.
         MainMenu menu = new MainMenu(this);
         frame.getContentPane().removeAll();
         frame.remove(frame.getContentPane());
         frame.add(menu);
         frame.setContentPane(menu);
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    public void makeScoreMenu() {
+        //make the score menu - clear menu, add text boxes, etc.
+        ScoreMenu scoreMenu = new ScoreMenu(this);
+        frame.getContentPane().removeAll();
+        frame.remove(frame.getContentPane());
+        frame.add(scoreMenu);
+        frame.setContentPane(scoreMenu);
         frame.repaint();
         frame.revalidate();
     }
