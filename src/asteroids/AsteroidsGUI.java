@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public final class AsteroidsGUI extends JPanel implements Runnable {
@@ -21,6 +22,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 	private ArrayList<Bullet> enemyBulletList = new ArrayList<>();
     private ArrayList<Asteroid> asteroidList = new ArrayList<>();
     private ArrayList<Powerups> powerupsList = new ArrayList<>();
+    private static ArrayList<ScoreData> scoreData = new ArrayList<>();
     private int frameLength = 1000;
     private int frameHeight = 600;
     private int maxAsteroidDelay = 250;
@@ -28,8 +30,6 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public static Color bgc = Color.decode("#240046");
 
 	private static int[] playerData = {3, 2, 0};
-	private static String[] playerNames = new String[10];
-	private static int[] playerScores = new int[10];
 
     private SpaceBackground sbg = new SpaceBackground(this);
     //Has it's own run method for precise twinkle frequency.
@@ -65,22 +65,26 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 
 	public void readScores() {
 		try {
+		    scoreData.clear();
 			BufferedReader in = new BufferedReader(new FileReader("scores.txt"));
 			for (int i = 0; i < 10 ; i++) {
-				playerNames[i] = in.readLine();
-				playerScores[i] = Integer.valueOf(in.readLine());
+				String playerName = in.readLine();
+				int playerScore = Integer.valueOf(in.readLine());
+				scoreData.add(new ScoreData(playerName, playerScore));
 			}
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void printScores() {
-		int position = Arrays.binarySearch(playerScores, playerData[2]);
 		try {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("scores.txt")));
-			out.println("placeholder");
-			out.println(playerData[2]);
+			for (int i = 0; i < 10; i++) {
+			    out.println(scoreData.get(i).getName());
+			    out.println(scoreData.get(i).getScore());
+            }
 			out.close();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -101,6 +105,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public void run() {
         while (running) {
 			if (playerData[0] <= 0) {
+			    scoreData.add(new ScoreData("placeholderName", playerData[2]));
+			    Collections.sort(scoreData);
+                printScores();
 				makeScoreboard();
 				stop();
 				break;
@@ -131,7 +138,8 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     }
 
     public void makeScoreboard() {
-        Score newBoard = new Score(frame, this);
+        readScores();
+        Score newBoard = new Score(this);
         frame.getContentPane().removeAll();
         frame.remove(frame.getContentPane());
         frame.add(newBoard);
@@ -141,7 +149,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     }
 
     public void makeMenu() {
-        MainMenu menu = new MainMenu(frame, this);
+        MainMenu menu = new MainMenu(this);
         frame.getContentPane().removeAll();
         frame.remove(frame.getContentPane());
         frame.add(menu);
@@ -260,6 +268,10 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 	public static int[] getPlayerData() {
 		return playerData;
 	}
+
+	public static ArrayList<ScoreData> getScoreData() {
+        return scoreData;
+    }
 
     public static void main(String[] args) {
         //make the intial menu

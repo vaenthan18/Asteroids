@@ -15,7 +15,7 @@ public class MainMenu extends JPanel {
 
     public static Color bgc = Color.decode("#240046");
 
-    public MainMenu(JFrame frame, AsteroidsGUI gui) {
+    public MainMenu(AsteroidsGUI gui) {
         //Menu creation
         this.setLayout(null);
         this.setBackground(Color.getColor("#"));
