@@ -1,6 +1,7 @@
 package asteroids;
 
 import asteroids.components.GameComponent;
+import asteroids.components.gameboard.Explanation;
 import asteroids.components.gameboard.MainMenu;
 import asteroids.components.gameboard.Score;
 import asteroids.components.gameboard.ScoreMenu;
@@ -174,6 +175,17 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         frame.remove(frame.getContentPane());
         frame.add(menu);
         frame.setContentPane(menu);
+        frame.repaint();
+        frame.revalidate();
+    }
+
+    public void makeInstructions() {
+        //makes menu - clear board, make menu, etc.
+        Explanation explanation = new Explanation(this);
+        frame.getContentPane().removeAll();
+        frame.remove(frame.getContentPane());
+        frame.add(explanation);
+        frame.setContentPane(explanation);
         frame.repaint();
         frame.revalidate();
     }

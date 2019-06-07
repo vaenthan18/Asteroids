@@ -98,10 +98,19 @@ public class MainMenu extends JPanel {
         scoreButton.addActionListener(buttonPressed);
         scoreButton.setActionCommand("score");
 
-        JLabel shopButton = new JLabel("Shop");
+        JButton instructionsButton = new JButton("I N S T R U C T I O N S");
+		instructionsButton.setBounds(400, 500, 250, 50);
+		instructionsButton.setBackground(Color.BLACK);
+		instructionsButton.setForeground(Color.WHITE);
+		instructionsButton.setOpaque(true);
+		instructionsButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+		instructionsButton.setFont(new Font("Helvetica", Font.PLAIN, 20));
+		instructionsButton.addActionListener(buttonPressed);
+		instructionsButton.setActionCommand("instructions");
 
         this.add(startButton);
         this.add(scoreButton);
+        this.add(instructionsButton);
         timer.start();
     }
 }

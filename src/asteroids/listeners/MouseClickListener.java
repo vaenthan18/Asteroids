@@ -32,6 +32,8 @@ public class MouseClickListener implements ActionListener {
             System.out.println("haha not implemented yet");
         } else if ("return".equals(e.getActionCommand())) {
             gui.makeMenu();
+        } else if ("instructions".equals(e.getActionCommand())) {
+            gui.makeInstructions();
         }
     }
 }
