@@ -12,9 +12,9 @@ placeholderName
 1400
 Daniel
 1400
+yeet
+1000
 placeholderName
 900
 placeholderName
 600
-hi
-400
