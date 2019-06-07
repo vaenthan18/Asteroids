@@ -82,6 +82,9 @@ public class Alien extends GameComponent {
 		Area bulletArea;
 		Bullet bullet;
 		ArrayList<Bullet> bulletList = gui.getBulletList();
+		Bomb bomb;
+		Area bombArea;
+		ArrayList<Bomb> bombList = gui.getBombList();
 		boolean hasCollided = false;
 
 		for (int i = 0; i < bulletList.size(); i++) {
@@ -94,6 +97,18 @@ public class Alien extends GameComponent {
 			if (hasCollided) {
 				bulletList.remove(bullet);
 				health--;
+				break;
+			}
+		}
+		for (int i = 0; i < bombList.size(); i++) {
+			bomb = bombList.get(i);
+			bombArea = new Area((Shape) bomb.getBody());
+			alienArea = new Area((Shape) alienBody);
+
+			alienArea.intersect(bombArea);
+			hasCollided = !alienArea.isEmpty();
+			if (hasCollided) {
+				health = 0;
 				break;
 			}
 		}
