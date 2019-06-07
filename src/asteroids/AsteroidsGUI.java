@@ -105,7 +105,11 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         powerupsList.clear();
         alienList.clear();
         enemyBulletList.clear();
+        bombList.clear();
         maxAsteroidDelay = 250;
+		maxAlienDelay = 1500;
+		alienDelay = 0;
+		asteroidDelay = 0;
         playerData[0] = 5;
         playerData[1] = 2;
         playerData[2] = 0;
