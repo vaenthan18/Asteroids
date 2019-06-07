@@ -38,7 +38,6 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private static Clip bgmClip;
     public static Color bgc = Color.decode("#000c28");
 
-
     private static int[] playerData = new int[3];
     //Lives, ,Score
 
@@ -291,7 +290,6 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         double velocity = 3;
         asteroidList.add(new Asteroid(spawnX, spawnY, spawnColor, angle, maxHealth, radius, velocity));
     }
-
 
     public void addPlayerBullet(Bullet newBullet) {
         try {
