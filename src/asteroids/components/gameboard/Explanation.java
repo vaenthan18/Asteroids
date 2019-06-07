@@ -55,6 +55,12 @@ public class Explanation extends JPanel {
                 "Press 'b' to shoot a bomb, which pierces enemies and " +
                 "deals massive damage!\n" +
                 "Watch out for aliens - they can shoot you!\n" +
+                "Collect powerups while fighting enemies\n" +
+                "These include healing powerups\n" +
+                "More bomb ammo (you start with 2)\n" +
+                "And a shield\n" +
+                "Remember, you have 5 health at the start\n" +
+                "Big asteroids hit for 2!\n" +
                 "Have fun!");
         explain.setBounds(200, 100, 600, 300);
         explain.setBackground(bgc);
