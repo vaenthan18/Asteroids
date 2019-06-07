@@ -42,6 +42,10 @@ public class Alien extends GameComponent {
         }
     }
 
+    public Path2D.Double getAlienBody() {
+    	return alienBody;
+	}
+
     public void updatePoints() {
         alienBody.reset();
         alienBody.moveTo(x, y);

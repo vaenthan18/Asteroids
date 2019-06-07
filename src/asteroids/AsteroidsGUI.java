@@ -346,6 +346,10 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         return powerupsList;
     }
 
+    public ArrayList getAlienList() {
+        return alienList;
+    }
+
     public void addPowerup(Powerups powerup) {
         powerupsList.add(powerup);
     }

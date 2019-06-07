@@ -216,6 +216,31 @@ public class Player extends GameComponent {
 			}
 		}
 
+		Area alienArea;
+		Alien alien;
+		ArrayList<Alien> alienList = gui.getAlienList();
+		for (int i = 0; i < alienList.size(); i++) {
+			alien = alienList.get(i);
+			alienArea = new Area((Shape) alien.getAlienBody());
+			shipArea = shieldActive ? new Area((Shape) shield) : new Area((Shape) shipBody);
+
+			shipArea.intersect(alienArea);
+			hasCollided = !shipArea.isEmpty();
+			if (hasCollided) {
+				if (shieldActive) {
+					alienList.remove(alien);
+				} else {
+					if (immortalCounter < 0) {
+						alienList.remove(alien);
+						playerData[0] -= 2;
+						System.out.println("Lives: " + playerData[0]);
+						immortalCounter = 80;
+						break;
+					}
+				}
+			}
+		}
+
 		immortalCounter--;
 
 		for (int i = 0; i < powerupsList.size(); i++) {
