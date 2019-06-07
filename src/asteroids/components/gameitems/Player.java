@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -148,18 +149,23 @@ public class Player extends GameComponent {
 			hasCollided = !shipArea.isEmpty();
 			if (hasCollided) {
 				System.out.println("collided");
-				if (immortalCounter > 0) {
-					immortalCounter--;
-				} else {
+				if (immortalCounter < 0) {
 					asteroid.shatter(gui);
 					asteroidList.remove(asteroid);
-					playerData[0]--;
-					immortalCounter = 10;
+					if (asteroid.healthValue() == 5) {
+						playerData[0] -= 2;
+					} else {
+						playerData[0]--;
+					}
+					immortalCounter = 80;
 					System.out.println("Lives: " + playerData[0]);
 					break;
 				}
 			}
 		}
+
+		immortalCounter --;
+
 		Area bulletArea;
 		Bullet bullet;
 		ArrayList<Bullet> bulletList = gui.getEnemyBulletsList();
@@ -213,10 +219,15 @@ public class Player extends GameComponent {
 			tx.rotate(Math.toRadians(-angle), img.getWidth() / 2.0, 0);
 			a.rotate(Math.toRadians(-angle), x, y);
 			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-
 			Shape newShape = a.createTransformedShape(shipBody);
 			shipBody = (Path2D.Double) newShape;
 			g2d.setColor(Color.BLACK);
-			g2d.drawImage(img, op, (int) x, (int) y);
+			if (immortalCounter > 0) {
+				if ((Math.ceil(immortalCounter / (double)8)) % 2 == 0) {
+					g2d.drawImage(img, op, (int) x, (int) y);
+				}
+			} else {
+				g2d.drawImage(img, op, (int) x, (int) y);
+			}
 	}
 }

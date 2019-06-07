@@ -109,6 +109,10 @@ public class Asteroid extends GameComponent {
         return health == 0;
     }
 
+    public int healthValue() {
+        return (int) maxHealth;
+    }
+
     public void move() { //Don't forget to put this in the update method
         x += velocity * Math.cos(Math.toRadians(-angle - 90));
         y += velocity * Math.sin(Math.toRadians(-angle - 90));

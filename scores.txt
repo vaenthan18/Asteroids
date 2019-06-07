@@ -4,6 +4,8 @@ DeadManWalking1
 2500
 DeadManWalking1
 2500
+Ree
+2100
 DeadManWalking
 1800
 placeholderName
@@ -14,7 +16,5 @@ placeholderName
 900
 placeholderName
 600
-hi
-400
 hi
 400
