@@ -238,11 +238,22 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
             for (int i = 0; i < bombList.size(); i++) {
                 bombList.get(i).paintComponent(g2);
             }
+            g.setColor(Color.RED);
+            g.fillRect(25 + 70 * playerData[0], 25, 350 - 70 * playerData[0], 15);
+            g.setColor(Color.GREEN);
+            g.fillRect(25, 25, 70 * playerData[0], 15);
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Helvetica", Font.BOLD, 14));
+            g.drawString("HP: " + playerData[0] * 10 + "/50", 175, 38);
+            g.setFont(new Font("Helvetica", Font.BOLD, 16));
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Helvetica", Font.BOLD, 20));
-            g.drawString("SCORE: " + playerData[2], 25, 40);
-            g.drawString("BOMBS: " + playerData[1], 25, 70);
-            g.drawString("HEALTH: " + playerData[0], 25, 100);
+            g.drawString("S C O R E: " + playerData[2], 25, 70);
+            g.setColor(Color.decode("#a80000"));
+            g.drawString("B O M B S: " + playerData[1], 25, 100);
+            if (player.shieldActive) {
+                g.setColor(Color.CYAN);
+                g.drawString("SHIELD ACTIVE", 25, 130);
+            }
         }
         this.setBackground(bgc);
     }

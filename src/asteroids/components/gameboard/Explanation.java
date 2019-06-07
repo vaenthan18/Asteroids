@@ -59,7 +59,7 @@ public class Explanation extends JPanel {
                 "These include healing powerups\n" +
                 "More bomb ammo (you start with 2)\n" +
                 "And a shield\n" +
-                "Remember, you have 5 health at the start\n" +
+                "Remember, you have 5 health points at the start\n" +
                 "Big asteroids hit for 2!\n" +
                 "Have fun!");
         explain.setBounds(200, 100, 600, 300);

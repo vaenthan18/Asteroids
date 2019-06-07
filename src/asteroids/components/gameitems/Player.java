@@ -40,7 +40,7 @@ public class Player extends GameComponent {
 	private double maxShootDelay = 10; //The lower the number, the higher the fire rate
 	private double shootDelay = 0; //Current shoot delay counter
 	private int[] playerData;
-	private boolean shieldActive = true;
+	public boolean shieldActive = true;
 	private static int shieldCounter = 500;
 	protected Ellipse2D.Double shield = new Ellipse2D.Double((int) (x - 20 + 5 * Math.cos(Math.toRadians(angle + 90)) - 20 * Math.cos(Math.toRadians(angle + 90))), (int) (y - 20 - 5 * Math.sin(Math.toRadians(angle + 90)) - 20 * Math.sin(Math.toRadians(-angle - 90))), 40, 40);
 
