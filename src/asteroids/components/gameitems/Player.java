@@ -118,6 +118,14 @@ public class Player extends GameComponent {
 				shootDelay = maxShootDelay;
 			}
 		}
+		if (inputs.contains(KeyEvent.VK_DOWN)) {
+			if (shootDelay <= 0 && playerData[1] > 0) {
+				Bomb bomb = new Bomb(x, y, Color.CYAN, angle);
+				gui.addBomb(bomb);
+				shootDelay = maxShootDelay;
+				playerData[1]--;
+			}
+		}
 		if (shootDelay > 0) {
 			setShootDelay(getShootDelay() - 1);
 		}
