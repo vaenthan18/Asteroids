@@ -28,7 +28,7 @@ public class MoveListener extends KeyAdapter {
 
     public void keyReleased(KeyEvent k) {
         if (keysPressed.contains(k.getKeyCode())) {
-            keysPressed.remove(k.getKeyCode());
+            keysPressed.remove(keysPressed.indexOf(k.getKeyCode()));
         }
         gui.player.updateMovementInputs(keysPressed);
     }

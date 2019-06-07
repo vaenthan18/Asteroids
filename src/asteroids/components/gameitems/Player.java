@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -39,6 +40,11 @@ public class Player extends GameComponent {
     private double maxShootDelay = 10; //The lower the number, the higher the fire rate
     private double shootDelay = 0; //Current shoot delay counter
     private int[] playerData;
+    private boolean shieldActive = false;
+    private static int shieldCounter = 0;
+    protected Ellipse2D.Double shield = new Ellipse2D.Double((int)(x - 20 + 5 * Math.cos(Math.toRadians(angle + 90)) - 20 * Math.cos(Math.toRadians(angle + 90))), (int)(y - 20 - 5 * Math.sin(Math.toRadians(angle+90)) - 20 * Math.sin(Math.toRadians(-angle - 90))), 40, 40);
+    ;
+
 
     public Player(int x, int y, Color color, double velocity) {
         super(x, y, color);
@@ -74,6 +80,11 @@ public class Player extends GameComponent {
 
     public void update(AsteroidsGUI gui) {
         collisionCheck(gui);
+        if (shieldCounter <= 0) {
+            shieldActive = false;
+        } else {
+            shieldCounter--;
+        }
         if (inputs.contains(KeyEvent.VK_UP)) { //UP
             xSpeed += velocity * Math.cos(Math.toRadians(angle + 90));
             ySpeed += velocity * Math.sin(Math.toRadians(-angle - 90));
@@ -117,7 +128,7 @@ public class Player extends GameComponent {
                 shootDelay = maxShootDelay;
             }
         }
-        if (inputs.contains(KeyEvent.VK_DOWN)) {
+        if (inputs.contains(KeyEvent.VK_B)) {
             if (shootDelay <= 0 && playerData[1] > 0) {
                 Bomb bomb = new Bomb(x, y, Color.CYAN, angle);
                 gui.addBomb(bomb);
@@ -149,8 +160,8 @@ public class Player extends GameComponent {
 
         for (int i = 0; i < asteroidList.size(); i++) {
             asteroid = asteroidList.get(i);
-            asteroidArea = new Area(asteroid.getBody());
-            shipArea = new Area(shipBody);
+            asteroidArea = new Area((Shape) asteroid.getBody());
+            shipArea = new Area((Shape) shipBody);
 
             shipArea.intersect(asteroidArea);
             hasCollided = !shipArea.isEmpty();
@@ -177,8 +188,8 @@ public class Player extends GameComponent {
 
         for (int i = 0; i < bulletList.size(); i++) {
             bullet = bulletList.get(i);
-            bulletArea = new Area(bullet.getBody());
-            shipArea = new Area(shipBody);
+            bulletArea = new Area((Shape) bullet.getBody());
+            shipArea = new Area((Shape) shipBody);
 
             shipArea.intersect(bulletArea);
             hasCollided = !shipArea.isEmpty();
@@ -197,8 +208,8 @@ public class Player extends GameComponent {
 
         for (int i = 0; i < powerupsList.size(); i++) {
             powerup = powerupsList.get(i);
-            powerupArea = new Area(powerup.getBody());
-            shipArea = new Area(shipBody);
+            powerupArea = new Area((Shape) powerup.getBody());
+            shipArea = new Area((Shape) shipBody);
             shipArea.intersect(powerupArea);
             hasCollided = !shipArea.isEmpty();
             if (hasCollided) {
@@ -207,6 +218,8 @@ public class Player extends GameComponent {
                 } else if (powerup.getType().equals(PowerupType.BOMB)) {
                     playerData[1]++;
                 } else if (powerup.getType().equals(PowerupType.SHIELD)) {
+                    shieldActive = true;
+                    shieldCounter = 500;
                 }
                 powerupsList.remove(i);
             }
@@ -232,13 +245,16 @@ public class Player extends GameComponent {
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
         Shape newShape = a.createTransformedShape(shipBody);
         shipBody = (Path2D.Double) newShape;
-        g2d.setColor(Color.BLACK);
         if (immortalCounter > 0) {
             if ((Math.ceil(immortalCounter / (double) 8)) % 2 == 0) {
                 g2d.drawImage(img, op, (int) x, (int) y);
             }
         } else {
             g2d.drawImage(img, op, (int) x, (int) y);
+        }
+        g2d.setColor(new Color(0, 255, 255, 75));
+        if (shieldActive) {
+            g2d.fillOval((int)(x - 20 + 5 * Math.cos(Math.toRadians(angle + 90)) - 20 * Math.cos(Math.toRadians(angle + 90))), (int)(y - 20 - 5 * Math.sin(Math.toRadians(angle+90)) - 20 * Math.sin(Math.toRadians(-angle - 90))), 40, 40);
         }
     }
 }
