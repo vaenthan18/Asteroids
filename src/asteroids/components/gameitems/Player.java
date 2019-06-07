@@ -171,8 +171,6 @@ public class Player extends GameComponent {
 			}
 		}
 
-		immortalCounter--;
-
 		Area bulletArea;
 		Bullet bullet;
 		ArrayList<Bullet> bulletList = gui.getEnemyBulletsList();
@@ -185,12 +183,17 @@ public class Player extends GameComponent {
 			shipArea.intersect(bulletArea);
 			hasCollided = !shipArea.isEmpty();
 			if (hasCollided) {
-				bulletList.remove(bullet);
-				playerData[0]--;
-				System.out.println("Lives: " + playerData[0]);
-				break;
+				if (immortalCounter < 0) {
+					bulletList.remove(bullet);
+					playerData[0]--;
+					System.out.println("Lives: " + playerData[0]);
+					immortalCounter = 80;
+					break;
+				}
 			}
 		}
+
+		immortalCounter--;
 
 		for (int i = 0; i < powerupsList.size(); i++) {
 			powerup = powerupsList.get(i);
