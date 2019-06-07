@@ -40,10 +40,9 @@ public class Player extends GameComponent {
     private double maxShootDelay = 10; //The lower the number, the higher the fire rate
     private double shootDelay = 0; //Current shoot delay counter
     private int[] playerData;
-    private boolean shieldActive = false;
-    private static int shieldCounter = 0;
+    private boolean shieldActive = true;
+    private static int shieldCounter = 300;
     protected Ellipse2D.Double shield = new Ellipse2D.Double((int)(x - 20 + 5 * Math.cos(Math.toRadians(angle + 90)) - 20 * Math.cos(Math.toRadians(angle + 90))), (int)(y - 20 - 5 * Math.sin(Math.toRadians(angle+90)) - 20 * Math.sin(Math.toRadians(-angle - 90))), 40, 40);
-    ;
 
 
     public Player(int x, int y, Color color, double velocity) {
@@ -84,6 +83,9 @@ public class Player extends GameComponent {
             shieldActive = false;
         } else {
             shieldCounter--;
+        }
+        if (shieldActive) {
+            shield = new Ellipse2D.Double((int)(x - 20 + 5 * Math.cos(Math.toRadians(angle + 90)) - 20 * Math.cos(Math.toRadians(angle + 90))), (int)(y - 20 - 5 * Math.sin(Math.toRadians(angle+90)) - 20 * Math.sin(Math.toRadians(-angle - 90))), 40, 40);
         }
         if (inputs.contains(KeyEvent.VK_UP)) { //UP
             xSpeed += velocity * Math.cos(Math.toRadians(angle + 90));
@@ -152,6 +154,7 @@ public class Player extends GameComponent {
         Area shipArea;
         Area asteroidArea;
         Area powerupArea;
+        Area shieldArea;
         Asteroid asteroid;
         Powerups powerup;
         ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
@@ -161,23 +164,28 @@ public class Player extends GameComponent {
         for (int i = 0; i < asteroidList.size(); i++) {
             asteroid = asteroidList.get(i);
             asteroidArea = new Area((Shape) asteroid.getBody());
-            shipArea = new Area((Shape) shipBody);
+            shipArea = shieldActive ? new Area((Shape)shield) : new Area((Shape) shipBody);
 
             shipArea.intersect(asteroidArea);
             hasCollided = !shipArea.isEmpty();
             if (hasCollided) {
-                System.out.println("collided");
-                if (immortalCounter < 0) {
+                if (shieldActive) {
                     asteroid.shatter(gui);
                     asteroidList.remove(asteroid);
-                    if (asteroid.healthValue() == 5) {
-                        playerData[0] -= 2;
-                    } else {
-                        playerData[0]--;
-                    }
-                    immortalCounter = 80;
-                    System.out.println("Lives: " + playerData[0]);
                     break;
+                } else {
+                    if (immortalCounter < 0) {
+                        asteroid.shatter(gui);
+                        asteroidList.remove(asteroid);
+                        if (asteroid.healthValue() == 5) {
+                            playerData[0] -= 2;
+                        } else {
+                            playerData[0]--;
+                        }
+                        immortalCounter = 80;
+                        System.out.println("Lives: " + playerData[0]);
+                        break;
+                    }
                 }
             }
         }
@@ -189,17 +197,21 @@ public class Player extends GameComponent {
         for (int i = 0; i < bulletList.size(); i++) {
             bullet = bulletList.get(i);
             bulletArea = new Area((Shape) bullet.getBody());
-            shipArea = new Area((Shape) shipBody);
+            shipArea = shieldActive ? new Area((Shape)shield) : new Area((Shape) shipBody);
 
             shipArea.intersect(bulletArea);
             hasCollided = !shipArea.isEmpty();
             if (hasCollided) {
-                if (immortalCounter < 0) {
+                if (shieldActive) {
                     bulletList.remove(bullet);
-                    playerData[0]--;
-                    System.out.println("Lives: " + playerData[0]);
-                    immortalCounter = 80;
-                    break;
+                } else {
+                    if (immortalCounter < 0) {
+                        bulletList.remove(bullet);
+                        playerData[0]--;
+                        System.out.println("Lives: " + playerData[0]);
+                        immortalCounter = 80;
+                        break;
+                    }
                 }
             }
         }
@@ -254,7 +266,7 @@ public class Player extends GameComponent {
         }
         g2d.setColor(new Color(0, 255, 255, 75));
         if (shieldActive) {
-            g2d.fillOval((int)(x - 20 + 5 * Math.cos(Math.toRadians(angle + 90)) - 20 * Math.cos(Math.toRadians(angle + 90))), (int)(y - 20 - 5 * Math.sin(Math.toRadians(angle+90)) - 20 * Math.sin(Math.toRadians(-angle - 90))), 40, 40);
+            g2d.fill(shield);
         }
     }
 }
