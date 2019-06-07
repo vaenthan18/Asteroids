@@ -14,9 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * @author vaenthan
- */
 public class Asteroid extends GameComponent {
 
     protected double maxHealth;

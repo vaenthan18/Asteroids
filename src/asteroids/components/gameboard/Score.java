@@ -11,9 +11,6 @@ import asteroids.listeners.MouseClickListener;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * @author vaenthan
- */
 public class Score extends JPanel {
 
     public static Color bgc = Color.decode("#000c28");

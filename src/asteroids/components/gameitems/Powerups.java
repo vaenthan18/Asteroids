@@ -18,9 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * @author vaenthan
- */
 public class Powerups extends GameComponent {
 
     protected double x;

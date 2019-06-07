@@ -11,9 +11,6 @@ import asteroids.components.GameComponent;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
-/**
- * @author vaenthan
- */
 public class Bullet extends GameComponent {
 
     protected double angle;

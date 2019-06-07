@@ -19,9 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * @author vaenthan
- */
 public class Alien extends GameComponent {
 
     private static AsteroidsGUI gui;

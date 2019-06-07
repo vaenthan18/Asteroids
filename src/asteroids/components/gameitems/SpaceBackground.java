@@ -13,7 +13,7 @@ import java.awt.geom.Ellipse2D;
 
 public class SpaceBackground extends GameComponent implements Runnable {
 
-    private int interval = 10; //Higher number == less stars //Imo 5 is the best, but much slower
+    private int interval = 10; //Higher number == less stars
     private int rows;
     private int columns;
     private boolean running = false;
