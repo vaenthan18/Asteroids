@@ -41,7 +41,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public Player player = new Player(500, 300, Color.WHITE, .1);
     private boolean running = false;
 
-
+	public boolean isRunning() {
+		return running;
+	}
 
     public void start() {
         //When the start button is clicked the menu is deleted and the game is added
@@ -310,6 +312,10 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 	public static ArrayList<ScoreData> getScoreData() {
         return scoreData;
     }
+
+    public JFrame getFrame() {
+    	return frame;
+	}
 
     public static void main(String[] args) {
         //make the intial menu
