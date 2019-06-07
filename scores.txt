@@ -1,3 +1,7 @@
+Rea
+5200
+rarara
+3500
 Killer
 2600
 DeadManWalking1
@@ -14,7 +18,3 @@ Daniel
 1400
 yeet
 1000
-placeholderName
-900
-placeholderName
-600
