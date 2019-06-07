@@ -213,6 +213,8 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Helvetica", Font.BOLD, 20));
 			g.drawString("SCORE: " + playerData[2], 25, 40);
+			g.drawString("BOMBS: " + playerData[1], 25, 70);
+			g.drawString("HEALTH: " + playerData[0], 25, 100);
         }
         this.setBackground(bgc);
     }

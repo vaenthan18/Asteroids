@@ -1,5 +1,11 @@
 Killer
 2600
+DeadManWalking1
+2500
+DeadManWalking1
+2500
+DeadManWalking
+1800
 placeholderName
 1400
 Daniel
@@ -12,9 +18,3 @@ hi
 400
 hi
 400
-Uwu
-100
-Uwu
-100
-placeholderName
-100
