@@ -62,7 +62,7 @@ public class Explanation extends JPanel {
                 "Remember, you have 5 health points at the start\n" +
                 "Big asteroids hit for 2!\n" +
                 "Have fun!");
-        explain.setBounds(200, 100, 600, 300);
+        explain.setBounds(200, 100, 600, 400);
         explain.setBackground(bgc);
         explain.setForeground(Color.WHITE);
         explain.setOpaque(false);

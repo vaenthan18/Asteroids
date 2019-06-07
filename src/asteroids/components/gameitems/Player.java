@@ -40,8 +40,8 @@ public class Player extends GameComponent {
 	private double maxShootDelay = 10; //The lower the number, the higher the fire rate
 	private double shootDelay = 0; //Current shoot delay counter
 	private int[] playerData;
-	public boolean shieldActive = true;
-	private static int shieldCounter = 500;
+	public boolean shieldActive = false;
+	private static int shieldCounter = 0;
 	protected Ellipse2D.Double shield = new Ellipse2D.Double((int) (x - 20 + 5 * Math.cos(Math.toRadians(angle + 90)) - 20 * Math.cos(Math.toRadians(angle + 90))), (int) (y - 20 - 5 * Math.sin(Math.toRadians(angle + 90)) - 20 * Math.sin(Math.toRadians(-angle - 90))), 40, 40);
 
 
@@ -256,7 +256,7 @@ public class Player extends GameComponent {
 					playerData[1]++;
 				} else if (powerup.getType().equals(PowerupType.SHIELD)) {
 					shieldActive = true;
-					shieldCounter = 500;
+					shieldCounter = 300;
 				}
 				powerupsList.remove(i);
 			}
