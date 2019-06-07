@@ -54,7 +54,8 @@ public class Explanation extends JPanel{
                 "Each asteroid has a different point value and different sizes\n" +
                 "When you break a large one, it might split into smaller ones!\n" +
                 "Press the arrow keys to move, except down arrow\n" +
-                "Press the down arrow to shoot a bomb, which pierces enemies and deals massive damage!\n" +
+                "Press the down arrow to shoot a bomb, which pierces enemies and " +
+                "deals massive damage!\n" +
                 "Watch out for aliens - they can shoot you!\n" +
                 "Have fun!");
         explain.setBounds(200, 100, 600, 300);
