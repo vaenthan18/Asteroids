@@ -7,7 +7,7 @@ package asteroids.components.gameitems;
 
 import asteroids.AsteroidsGUI;
 import asteroids.components.GameComponent;
-import javax.swing.*;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 

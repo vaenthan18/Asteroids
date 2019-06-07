@@ -1,14 +1,12 @@
 package asteroids.listeners;
 
 import asteroids.AsteroidsGUI;
-import asteroids.components.gameitems.Player;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class MoveListener extends KeyAdapter {
 
@@ -30,7 +28,7 @@ public class MoveListener extends KeyAdapter {
 
     public void keyReleased(KeyEvent k) {
         if (keysPressed.contains(k.getKeyCode())) {
-            keysPressed.remove(keysPressed.indexOf(k.getKeyCode()));
+            keysPressed.remove(k.getKeyCode());
         }
         gui.player.updateMovementInputs(keysPressed);
     }

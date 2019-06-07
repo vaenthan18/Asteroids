@@ -1,6 +1,6 @@
 package asteroids;
 
-public class ScoreData implements Comparable<ScoreData>{
+public class ScoreData implements Comparable<ScoreData> {
 
     private int score;
     private String name;

@@ -9,14 +9,12 @@ import asteroids.AsteroidsGUI;
 import asteroids.listeners.MouseClickListener;
 
 import javax.swing.*;
-import java.awt.event.*;
 import java.awt.*;
 
 /**
- *
  * @author vaenthan
  */
-public class Explanation extends JPanel{
+public class Explanation extends JPanel {
 
     public static Color bgc = Color.decode("#000c28");
 

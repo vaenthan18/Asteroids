@@ -12,10 +12,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *
  * @author vaenthan
  */
-public class Score extends JPanel{
+public class Score extends JPanel {
 
     public static Color bgc = Color.decode("#000c28");
     public static String[][] scoreArray = new String[10][2];

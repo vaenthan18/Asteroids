@@ -11,14 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
  * @author vaenthan
  */
 public class MouseClickListener implements ActionListener {
 
     private final AsteroidsGUI gui;
 
-    public MouseClickListener (AsteroidsGUI gui) {
+    public MouseClickListener(AsteroidsGUI gui) {
         this.gui = gui;
     }
 

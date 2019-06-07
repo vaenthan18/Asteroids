@@ -6,7 +6,6 @@
 package asteroids.components.gameboard;
 
 /**
- *
  * @author vaenthan
  */
 public class ActivePowers {

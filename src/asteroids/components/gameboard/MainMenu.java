@@ -24,53 +24,54 @@ public class MainMenu extends JPanel {
     private static int counter = 0;
     private static SpaceBackground sbg;
 
-	private static class Animate implements ActionListener {
+    private static class Animate implements ActionListener {
 
-		public void actionPerformed(ActionEvent e) {
-			if (!gui.isRunning()) {
-				if (counter == 0) {
-					counter = 100;
-					if (gui.getAsteroidList().size() < 10) {
-						gui.createAsteroid();
-					}
-				} else {
-					counter--;
-				}
-				ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
-				for (int i = 0; i < gui.getAsteroidList().size(); i++) { //Don't change this to a for each
-					asteroidList.get(i).update(gui); //Updates state of game objects.
-				}
-				gui.getFrame().repaint();
-			}
-		}
-	}
-	public void paintComponent (Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		sbg.paintComponent(g2);
-		ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
-		for (int i = 0; i < gui.getAsteroidList().size(); i++) { //Don't change this to a for each
-			asteroidList.get(i).paintComponent(g2); //Updates state of game objects.
-		}
-	}
+        public void actionPerformed(ActionEvent e) {
+            if (!gui.isRunning()) {
+                if (counter == 0) {
+                    counter = 100;
+                    if (gui.getAsteroidList().size() < 10) {
+                        gui.createAsteroid();
+                    }
+                } else {
+                    counter--;
+                }
+                ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
+                for (int i = 0; i < gui.getAsteroidList().size(); i++) { //Don't change this to a for each
+                    asteroidList.get(i).update(gui); //Updates state of game objects.
+                }
+                gui.getFrame().repaint();
+            }
+        }
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        sbg.paintComponent(g2);
+        ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
+        for (int i = 0; i < gui.getAsteroidList().size(); i++) { //Don't change this to a for each
+            asteroidList.get(i).paintComponent(g2); //Updates state of game objects.
+        }
+    }
 
     public MainMenu(AsteroidsGUI gui) {
         //Menu creation
         this.setLayout(null);
-        this.setBackground(gui.bgc);
-		sbg = new SpaceBackground(gui);
-        this.gui = gui;
+        this.setBackground(AsteroidsGUI.bgc);
+        sbg = new SpaceBackground(gui);
+        MainMenu.gui = gui;
 
-		BufferedImage before = null;
-		try {
-			before = ImageIO.read(new File("Images/title.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        BufferedImage before = null;
+        try {
+            before = ImageIO.read(new File("Images/title.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		JLabel title = new JLabel(new ImageIcon(before));
-		title.setBounds(200, 100, 600, 200);
-		this.add(title);
+        JLabel title = new JLabel(new ImageIcon(before));
+        title.setBounds(200, 100, 600, 200);
+        this.add(title);
 /*
         JLabel title = new JLabel("ASTEROIDS", SwingConstants.CENTER);
         title.setForeground(Color.WHITE);
@@ -99,14 +100,14 @@ public class MainMenu extends JPanel {
         scoreButton.setActionCommand("score");
 
         JButton instructionsButton = new JButton("I N S T R U C T I O N S");
-		instructionsButton.setBounds(400, 500, 250, 50);
-		instructionsButton.setBackground(Color.BLACK);
-		instructionsButton.setForeground(Color.WHITE);
-		instructionsButton.setOpaque(true);
-		instructionsButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-		instructionsButton.setFont(new Font("Helvetica", Font.PLAIN, 20));
-		instructionsButton.addActionListener(buttonPressed);
-		instructionsButton.setActionCommand("instructions");
+        instructionsButton.setBounds(400, 500, 250, 50);
+        instructionsButton.setBackground(Color.BLACK);
+        instructionsButton.setForeground(Color.WHITE);
+        instructionsButton.setOpaque(true);
+        instructionsButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+        instructionsButton.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        instructionsButton.addActionListener(buttonPressed);
+        instructionsButton.setActionCommand("instructions");
 
         this.add(startButton);
         this.add(scoreButton);
