@@ -22,6 +22,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private ArrayList<Asteroid> asteroidList = new ArrayList<>();
     private ArrayList<Powerups> powerupsList = new ArrayList<>();
 	private ArrayList<Alien> alienList = new ArrayList<>();
+	private ArrayList<Bomb> bombList = new ArrayList<>();
     private static ArrayList<ScoreData> scoreData = new ArrayList<>();
     private int frameLength = 1000;
     private int frameHeight = 600;
@@ -108,6 +109,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 		playerData[0] = 5;
 		playerData[1] = 2;
 		playerData[2] = 0;
+        maxAsteroidDelay = 250;
 	}
 
     public void run() {
@@ -136,6 +138,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 			for (int i = 0; i < alienList.size(); i++) {
 				alienList.get(i).update(this);
 			}
+			for(int i = 0; i < bombList.size(); i++) {
+			    bombList.get(i).update(this);
+            }
             spawnAsteroid();
 			spawnAlien();
             repaint(); //Draws objects
@@ -214,6 +219,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 			for (int i = 0; i < alienList.size(); i++) {
 				alienList.get(i).paintComponent(g2);
 			}
+			for (int i = 0; i < bombList.size(); i++) {
+			    bombList.get(i).paintComponent(g2);
+            }
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Helvetica", Font.BOLD, 20));
 			g.drawString("SCORE: " + playerData[2], 25, 40);
@@ -271,6 +279,18 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 
     public ArrayList getBulletList() {
         return bulletList;
+    }
+
+    public ArrayList getBombList() {
+	    return bombList;
+    }
+
+    public void removeBomb(Bomb bomb) {
+	    bombList.remove(bomb);
+    }
+
+    public void addBomb(Bomb bomb) {
+	    bombList.add(bomb);
     }
 
     public ArrayList getPowerupsList() {

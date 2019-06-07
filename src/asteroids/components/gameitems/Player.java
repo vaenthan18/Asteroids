@@ -117,6 +117,14 @@ public class Player extends GameComponent {
 				shootDelay = maxShootDelay;
 			}
 		}
+		if (inputs.contains(KeyEvent.VK_DOWN)) {
+			if (shootDelay <= 0 && playerData[1] > 0) {
+				Bomb bomb = new Bomb(x, y, Color.CYAN, angle);
+				gui.addBomb(bomb);
+				shootDelay = maxShootDelay;
+				playerData[1]--;
+			}
+		}
 		if (shootDelay > 0) {
 			setShootDelay(getShootDelay() - 1);
 		}
@@ -191,12 +199,13 @@ public class Player extends GameComponent {
 			shipArea.intersect(powerupArea);
 			hasCollided = !shipArea.isEmpty();
 			if (hasCollided) {
-				powerupsList.remove(powerup);
-				if (powerup.getType().equals("Health")) {
+				if (powerup.getType().equals(PowerupType.HEALTH)) {
 					playerData[0]++;
-				} else if (powerup.getType().equals("Bomb")) {
+				} else if (powerup.getType().equals(PowerupType.BOMB)) {
 					playerData[1]++;
+				} else if (powerup.getType().equals(PowerupType.SHIELD)) {
 				}
+				powerupsList.remove(i);
 			}
 		}
 	}
