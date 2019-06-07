@@ -43,22 +43,22 @@ public class Explanation extends JPanel {
         this.add(title);
 
         //Explanation JLabel
-        JTextArea explain = new JTextArea("Welcome to Asteroids\n" +
-                "This is a game where you shoot asteroids for points!\n" +
-                "Press the space bar to shoot regular bullets!\n" +
-                "Each asteroid has a different point value and different sizes\n" +
-                "When you break a large one, it might split into smaller ones!\n" +
-                "Press the arrow keys to move, except down arrow\n" +
-                "Press 'b' to shoot a bomb, which pierces enemies and " +
-                "deals massive damage!\n" +
-                "Watch out for aliens - they can shoot you!\n" +
-                "Collect powerups while fighting enemies\n" +
-                "These include healing powerups\n" +
-                "More bomb ammo (you start with 2)\n" +
-                "And a shield\n" +
-                "Remember, you have 5 health points at the start\n" +
-                "Big asteroids hit for 2!\n" +
-                "Have fun!");
+        JTextArea explain = new JTextArea("Welcome to Asteroids\n"
+                + "This is a game where you shoot asteroids for points!\n"
+                + "Press the space bar to shoot regular bullets!\n"
+                + "Each asteroid has a different point value and different sizes\n"
+                + "When you break a large one, it might split into smaller ones!\n"
+                + "Press the arrow keys to move, except down arrow\n"
+                + "Press 'b' to shoot a bomb, which pierces enemies and "
+                + "deals massive damage!\n"
+                + "Watch out for aliens - they can shoot you!\n"
+                + "Collect powerups while fighting enemies\n"
+                + "These include healing powerups\n"
+                + "More bomb ammo (you start with 2)\n"
+                + "And a shield\n"
+                + "Remember, you have 5 health points at the start\n"
+                + "Big asteroids hit for 2!\n"
+                + "Have fun!");
         explain.setBounds(200, 100, 600, 400);
         explain.setBackground(bgc);
         explain.setForeground(Color.WHITE);
@@ -66,6 +66,5 @@ public class Explanation extends JPanel {
         explain.setFont(new Font("Helvetica", Font.PLAIN, 20));
 
         this.add(explain);
-
     }
 }

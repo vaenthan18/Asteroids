@@ -1,6 +1,5 @@
 package asteroids.components.gameboard;
 
-
 import asteroids.AsteroidsGUI;
 import asteroids.components.gameitems.Asteroid;
 import asteroids.components.gameitems.SpaceBackground;
@@ -72,11 +71,7 @@ public class MainMenu extends JPanel {
         JLabel title = new JLabel(new ImageIcon(before));
         title.setBounds(200, 100, 600, 200);
         this.add(title);
-/*
-        JLabel title = new JLabel("ASTEROIDS", SwingConstants.CENTER);
-        title.setForeground(Color.WHITE);
-        title.setFont(new Font("Courier", Font.PLAIN, 55));
-*/
+        
         MouseClickListener buttonPressed = new MouseClickListener(gui);
 
         JButton startButton = new JButton("S T A R T");
