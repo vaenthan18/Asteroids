@@ -48,11 +48,11 @@ public class Explanation extends JPanel {
         //Explanation JLabel
         JTextArea explain = new JTextArea("Welcome to Asteroids\n" +
                 "This is a game where you shoot asteroids for points!\n" +
-                "Press spacebar to shoot regular bullets!\n" +
+                "Press the space bar to shoot regular bullets!\n" +
                 "Each asteroid has a different point value and different sizes\n" +
                 "When you break a large one, it might split into smaller ones!\n" +
                 "Press the arrow keys to move, except down arrow\n" +
-                "Press the down arrow to shoot a bomb, which pierces enemies and " +
+                "Press 'b' to shoot a bomb, which pierces enemies and " +
                 "deals massive damage!\n" +
                 "Watch out for aliens - they can shoot you!\n" +
                 "Have fun!");
