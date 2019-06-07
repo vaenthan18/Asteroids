@@ -2,23 +2,64 @@ package asteroids.components.gameboard;
 
 
 import asteroids.AsteroidsGUI;
+import asteroids.components.gameitems.Asteroid;
+import asteroids.components.gameitems.SpaceBackground;
 import asteroids.listeners.MouseClickListener;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainMenu extends JPanel {
 
     public static Color bgc = Color.decode("#240046");
+    private static Timer timer = new Timer(17, new Animate());
+    private static AsteroidsGUI gui;
+    private static int counter = 0;
+    private static SpaceBackground sbg;
+
+	private static class Animate implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (!gui.isRunning()) {
+				if (counter == 0) {
+					counter = 100;
+					if (gui.getAsteroidList().size() < 10) {
+						gui.createAsteroid();
+					}
+				} else {
+					counter--;
+				}
+				ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
+				for (int i = 0; i < gui.getAsteroidList().size(); i++) { //Don't change this to a for each
+					asteroidList.get(i).update(gui); //Updates state of game objects.
+				}
+				gui.getFrame().repaint();
+			}
+		}
+	}
+	public void paintComponent (Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		sbg.paintComponent(g2);
+		ArrayList<Asteroid> asteroidList = gui.getAsteroidList();
+		for (int i = 0; i < gui.getAsteroidList().size(); i++) { //Don't change this to a for each
+			asteroidList.get(i).paintComponent(g2); //Updates state of game objects.
+		}
+	}
 
     public MainMenu(AsteroidsGUI gui) {
         //Menu creation
         this.setLayout(null);
-        this.setBackground(Color.getColor("#"));
+        this.setBackground(gui.bgc);
+		sbg = new SpaceBackground(gui);
+        this.gui = gui;
 
 		BufferedImage before = null;
 		try {
@@ -61,7 +102,6 @@ public class MainMenu extends JPanel {
 
         this.add(startButton);
         this.add(scoreButton);
-
-
+        timer.start();
     }
 }
