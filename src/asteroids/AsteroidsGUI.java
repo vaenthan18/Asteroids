@@ -7,6 +7,8 @@ import asteroids.components.gameboard.ScoreMenu;
 import asteroids.components.gameitems.*;
 import asteroids.listeners.MoveListener;
 
+import javax.sound.sampled.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -30,7 +32,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     private int asteroidDelay = 0;
 	private int maxAlienDelay = 1500;
 	private int alienDelay = 0;
+	private static Clip bgmClip;
     public static Color bgc = Color.decode("#000c28");
+
 
 	private static int[] playerData = new int[3];
 	//Lives, ,Score
@@ -265,7 +269,15 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         asteroidList.add(new Asteroid(spawnX, spawnY, spawnColor, angle, maxHealth, radius, velocity));
     }
 
+
     public void addPlayerBullet(Bullet newBullet) {
+	    try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("Sound/smol.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+        }
         bulletList.add(newBullet);
     }
 
@@ -290,7 +302,33 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     }
 
     public void addBomb(Bomb bomb) {
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("Sound/thicc.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioIn);
+            clip.start();
+        } catch (Exception e) {
+        }
 	    bombList.add(bomb);
+    }
+
+    public static void playBGM() {
+        try {
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File("Sound/bgm.wav"));
+            bgmClip = AudioSystem.getClip();
+            bgmClip.open(audioIn);
+            FloatControl gainControl = (FloatControl) bgmClip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-10.0f);
+            bgmClip.start();
+        } catch (Exception e) {
+        }
+    }
+    public void play(){
+        bgmClip.setFramePosition(0);  // Must always rewind!
+        bgmClip.start();
+    }
+    public static void loop(){
+        bgmClip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public ArrayList getPowerupsList() {
@@ -342,8 +380,8 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 	}
 
     public static void main(String[] args) {
-        //make the intial menu
-        //makeMenu();
+        playBGM();
+        loop();
         AsteroidsGUI gui = new AsteroidsGUI(); //MAIN HERE
     }
 }
