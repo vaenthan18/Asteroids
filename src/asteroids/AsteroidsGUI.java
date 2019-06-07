@@ -58,6 +58,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         frame.revalidate();
         components.add(player);
         asteroidList.add(new Asteroid(750, 250, bgc, 90, 5, 50, 3));
+		alienList.add(new Alien(250, 250, bgc, this, 0));
 		readScores();
         Thread thread = new Thread(this);
         thread.start();
@@ -103,6 +104,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 		powerupsList.clear();
 		alienList.clear();
 		enemyBulletList.clear();
+		maxAsteroidDelay = 250;
 		playerData[0] = 5;
 		playerData[1] = 2;
 		playerData[2] = 0;

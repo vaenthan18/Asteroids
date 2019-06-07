@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -164,7 +163,7 @@ public class Player extends GameComponent {
 			}
 		}
 
-		immortalCounter --;
+		immortalCounter--;
 
 		Area bulletArea;
 		Bullet bullet;
@@ -212,22 +211,22 @@ public class Player extends GameComponent {
 
 	public void paintComponent(Graphics2D g2d) {
 		updatePoints();
-			AffineTransform tx = new AffineTransform();
-			AffineTransform a = new AffineTransform();
-			//tx.rotate(Math.toRadians(-angle), x, y);
-			tx.translate(-img.getWidth() / 2.0, 0);
-			tx.rotate(Math.toRadians(-angle), img.getWidth() / 2.0, 0);
-			a.rotate(Math.toRadians(-angle), x, y);
-			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			Shape newShape = a.createTransformedShape(shipBody);
-			shipBody = (Path2D.Double) newShape;
-			g2d.setColor(Color.BLACK);
-			if (immortalCounter > 0) {
-				if ((Math.ceil(immortalCounter / (double)8)) % 2 == 0) {
-					g2d.drawImage(img, op, (int) x, (int) y);
-				}
-			} else {
+		AffineTransform tx = new AffineTransform();
+		AffineTransform a = new AffineTransform();
+		//tx.rotate(Math.toRadians(-angle), x, y);
+		tx.translate(-img.getWidth() / 2.0, 0);
+		tx.rotate(Math.toRadians(-angle), img.getWidth() / 2.0, 0);
+		a.rotate(Math.toRadians(-angle), x, y);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		Shape newShape = a.createTransformedShape(shipBody);
+		shipBody = (Path2D.Double) newShape;
+		g2d.setColor(Color.BLACK);
+		if (immortalCounter > 0) {
+			if ((Math.ceil(immortalCounter / (double) 8)) % 2 == 0) {
 				g2d.drawImage(img, op, (int) x, (int) y);
 			}
+		} else {
+			g2d.drawImage(img, op, (int) x, (int) y);
+		}
 	}
 }

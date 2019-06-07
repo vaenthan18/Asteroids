@@ -8,9 +8,15 @@ package asteroids.components.gameitems;
 import asteroids.AsteroidsGUI;
 import asteroids.components.GameComponent;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Path2D;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -23,21 +29,38 @@ public class Alien extends GameComponent {
 	protected double velocity;
 	private double shootDelay = 50;
 	private int health = 5;
+	private static BufferedImage img = null;
 
 	public Alien(double x, double y, Color color, AsteroidsGUI gui, int velocity) {
 		super(x, y, color);
 		this.gui = gui;
 		this.velocity = velocity;
+		try {
+			img = ImageIO.read(new File("Images/alien.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void updatePoints() {
 		alienBody.reset();
-		alienBody.moveTo(x - 20, y - 20);
-		alienBody.lineTo(x + 20, y - 20);
-		alienBody.lineTo(x + 30, y);
-		alienBody.lineTo(x + 20, y + 20);
-		alienBody.lineTo(x - 20, y + 20);
-		alienBody.lineTo(x - 30, y);
+		alienBody.moveTo(x, y);
+		alienBody.lineTo(x - 12, y + 1);
+		alienBody.lineTo(x - 28, y + 19);
+		alienBody.lineTo(x - 30, y + 15);
+		alienBody.lineTo(x - 32, y + 25);
+		alienBody.lineTo(x - 29, y + 35);
+		alienBody.lineTo(x - 25, y + 22);
+		alienBody.lineTo(x - 18, y + 20);
+		alienBody.lineTo(x, y + 27);
+		alienBody.lineTo(x + 18, y + 20);
+		alienBody.lineTo(x + 25, y + 22);
+		alienBody.lineTo(x + 25, y + 22);
+		alienBody.lineTo(x + 29, y + 35);
+		alienBody.lineTo(x + 32, y + 25);
+		alienBody.lineTo(x + 30, y + 15);
+		alienBody.lineTo(x + 28, y + 19);
+		alienBody.lineTo(x + 12, y + 1);
 	}
 
 	public void move() { //Don't forget to put this in the update method
@@ -100,8 +123,13 @@ public class Alien extends GameComponent {
 	}
 
 	public void paintComponent(Graphics2D g2) {
-		g2.setColor(Color.WHITE);
+		g2.setColor(gui.bgc);
 		g2.draw(alienBody);
 		g2.draw(new Area((Shape) alienBody));
+		AffineTransform tx = new AffineTransform();
+		tx.scale(70.0/img.getWidth(), 70.0/img.getWidth());
+		tx.translate(-img.getWidth() / 2.0, 0);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		g2.drawImage(img, op, (int) x, (int) y);
 	}
 }
