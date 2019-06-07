@@ -80,7 +80,7 @@ public class Alien extends GameComponent {
         if (isDead()) {
             gui.removeAlien(this);
             asteroids.AsteroidsGUI.getPlayerData()[2] += 500;
-            int randomInt = (int) (Math.random() * 20 + 1);
+            int randomInt = (int) (Math.random() * 5 + 1);
             if (randomInt == 1 && gui.getPowerupsList().size() < 2) {
                 gui.addPowerup(new Powerups(x, y, AsteroidsGUI.bgc, 35, PowerupType.HEALTH));
             } else if (randomInt == 2 && gui.getPowerupsList().size() < 2) {
