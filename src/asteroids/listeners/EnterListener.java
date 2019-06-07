@@ -17,9 +17,13 @@ public class EnterListener implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         //upon clicking enter, we will get the text from the name and get the current score, then add it to scoreboard
+		System.out.println("hi");
         AsteroidsGUI.getScoreData().add(new ScoreData(asteroids.components.gameboard.ScoreMenu.getText(), AsteroidsGUI.getPlayerData()[2]));
         Collections.sort(asteroids.AsteroidsGUI.getScoreData());
-        gui.printScores();
-        gui.makeScoreboard();
+        try {
+            gui.printScores();
+            gui.makeScoreboard();
+        } catch(Exception ex) {
+        }
     }
 }

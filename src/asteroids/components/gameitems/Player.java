@@ -244,7 +244,7 @@ public class Player extends GameComponent {
             shipArea.intersect(powerupArea);
             hasCollided = !shipArea.isEmpty();
             if (hasCollided) {
-                if (powerup.getType().equals(PowerupType.HEALTH)) {
+                if (powerup.getType().equals(PowerupType.HEALTH) && playerData[0] < 5) {
                     playerData[0]++;
                 } else if (powerup.getType().equals(PowerupType.BOMB)) {
                     playerData[1]++;
