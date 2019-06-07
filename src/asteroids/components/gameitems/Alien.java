@@ -11,6 +11,7 @@ import asteroids.components.GameComponent;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.geom.Path2D;
+import java.util.ArrayList;
 
 /**
  * @author vaenthan
@@ -19,12 +20,14 @@ public class Alien extends GameComponent {
 
 	private static AsteroidsGUI gui;
 	private static Path2D.Double alienBody = new Path2D.Double();
-	protected double velocity = 3;
+	protected double velocity;
 	private double shootDelay = 50;
+	private int health = 5;
 
-	public Alien(double x, double y, Color color, AsteroidsGUI gui) {
+	public Alien(double x, double y, Color color, AsteroidsGUI gui, int velocity) {
 		super(x, y, color);
 		this.gui = gui;
+		this.velocity = velocity;
 	}
 
 	public void updatePoints() {
@@ -41,8 +44,24 @@ public class Alien extends GameComponent {
 		x += velocity;
 	}
 
-	public void update(AsteroidsGUI at) {
+	public void update(AsteroidsGUI gui) {
+		collisionCheck(gui);
 		move();
+		if (x < 0 || x > gui.getFrameLength()) {
+			gui.removeAlien(this);
+		}
+		if (isDead()) {
+			gui.removeAlien(this);
+			asteroids.AsteroidsGUI.getPlayerData()[2] += 500;
+			int randomInt = (int) (Math.random() * 20 + 1);
+			if (randomInt == 1 && gui.getPowerupsList().size() < 2) {
+				gui.addPowerup(new Powerups(x, y, gui.bgc, 35, PowerupType.HEALTH));
+			} else if (randomInt == 2 && gui.getPowerupsList().size() < 2) {
+				gui.addPowerup(new Powerups(x, y, gui.bgc, 35, PowerupType.BOMB));
+			} else if (randomInt == 3 && gui.getPowerupsList().size() < 2) {
+				gui.addPowerup(new Powerups(x, y, gui.bgc, 35, PowerupType.SHIELD));
+			}
+		}
 		updatePoints();
 		if (shootDelay >= 0) {
 			shootDelay--;
@@ -54,6 +73,31 @@ public class Alien extends GameComponent {
 		}
 	}
 
+	public boolean isDead() {
+		return health == 0;
+	}
+
+	public void collisionCheck(AsteroidsGUI gui) {
+		Area alienArea;
+		Area bulletArea;
+		Bullet bullet;
+		ArrayList<Bullet> bulletList = gui.getBulletList();
+		boolean hasCollided = false;
+
+		for (int i = 0; i < bulletList.size(); i++) {
+			bullet = bulletList.get(i);
+			bulletArea = new Area((Shape) bullet.getBody());
+			alienArea = new Area((Shape) alienBody);
+
+			alienArea.intersect(bulletArea);
+			hasCollided = !alienArea.isEmpty();
+			if (hasCollided) {
+				bulletList.remove(bullet);
+				health--;
+				break;
+			}
+		}
+	}
 
 	public void paintComponent(Graphics2D g2) {
 		g2.setColor(Color.WHITE);

@@ -11,8 +11,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 public final class AsteroidsGUI extends JPanel implements Runnable {
@@ -23,14 +21,18 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 	private ArrayList<Bullet> enemyBulletList = new ArrayList<>();
     private ArrayList<Asteroid> asteroidList = new ArrayList<>();
     private ArrayList<Powerups> powerupsList = new ArrayList<>();
+	private ArrayList<Alien> alienList = new ArrayList<>();
     private static ArrayList<ScoreData> scoreData = new ArrayList<>();
     private int frameLength = 1000;
     private int frameHeight = 600;
     private int maxAsteroidDelay = 250;
     private int asteroidDelay = 0;
+	private int maxAlienDelay = 1500;
+	private int alienDelay = 0;
     public static Color bgc = Color.decode("#000c28");
 
-	private static int[] playerData = {3, 2, 0};
+	private static int[] playerData = new int[3];
+	//Lives, ,Score
 
     private SpaceBackground sbg = new SpaceBackground(this);
     //Has it's own run method for precise twinkle frequency.
@@ -53,7 +55,6 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         frame.repaint();
         frame.revalidate();
         components.add(player);
-        components.add(new Alien(0,300,Color.WHITE, this));
         asteroidList.add(new Asteroid(750, 250, bgc, 90, 5, 50, 3));
 		readScores();
         Thread thread = new Thread(this);
@@ -98,7 +99,9 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 		components.clear();
 		asteroidList.clear();
 		powerupsList.clear();
-		playerData[0] = 3;
+		alienList.clear();
+		enemyBulletList.clear();
+		playerData[0] = 5;
 		playerData[1] = 2;
 		playerData[2] = 0;
 	}
@@ -126,7 +129,11 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 			for (int i = 0; i < enemyBulletList.size(); i++) {
 				enemyBulletList.get(i).update(this);
 			}
+			for (int i = 0; i < alienList.size(); i++) {
+				alienList.get(i).update(this);
+			}
             spawnAsteroid();
+			spawnAlien();
             repaint(); //Draws objects
             try {
                 Thread.sleep(17);
@@ -184,7 +191,7 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 		sbg.paintComponent(g2);
-		if (running == true) {
+		if (running) {
             for (int i = 0; i < components.size(); i++) {
                 components.get(i).paintComponent(g2);
             }
@@ -200,8 +207,12 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
 			for (int i = 0; i < enemyBulletList.size(); i++) {
 				enemyBulletList.get(i).paintComponent(g2);
 			}
-        } else if (running == false) {
-
+			for (int i = 0; i < alienList.size(); i++) {
+				alienList.get(i).paintComponent(g2);
+			}
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Helvetica", Font.BOLD, 20));
+			g.drawString("SCORE: " + playerData[2], 25, 40);
         }
         this.setBackground(bgc);
     }
@@ -214,6 +225,18 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
             maxAsteroidDelay -= (maxAsteroidDelay > 0) ? 10 : 0;
         }
     }
+
+    public void spawnAlien() {
+		alienDelay++;
+    	if (alienDelay > maxAlienDelay && playerData[2] > 1000 && alienList.size() <= 2) {
+			int y = (int)(Math.random() * 500) + 50;
+			int x = Math.random() > 0.5 ? frameLength : 0;
+			int velocity = x == 0 ? 3 : -3;
+    		alienList.add(new Alien(x, y, Color.WHITE, this, velocity));
+			alienDelay = 0;
+			maxAlienDelay -= (maxAlienDelay > 250) ? 10 : 0;
+		}
+	}
 
     public void createAsteroid() {
         Random random = new Random();
@@ -275,6 +298,10 @@ public final class AsteroidsGUI extends JPanel implements Runnable {
     public int getFrameHeight() {
         return frameHeight;
     }
+
+	public void removeAlien(Alien alien) {
+		alienList.remove(alien);
+	}
 
 	public static int[] getPlayerData() {
 		return playerData;

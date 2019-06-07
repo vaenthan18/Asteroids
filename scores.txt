@@ -8,13 +8,13 @@ placeholderName
 900
 placeholderName
 600
+hi
+400
+hi
+400
 Uwu
 100
 Uwu
-100
-placeholderName
-100
-placeholderName
 100
 placeholderName
 100

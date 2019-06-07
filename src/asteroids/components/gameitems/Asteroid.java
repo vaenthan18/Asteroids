@@ -51,11 +51,11 @@ public class Asteroid extends GameComponent {
             shatter(gui);
             gui.removeAsteroid(this);
             if (maxHealth == 5) {
-                asteroids.AsteroidsGUI.getPlayerData()[2] += 100;
+                asteroids.AsteroidsGUI.getPlayerData()[2] += 500;
             } else if (maxHealth == 3) {
                 asteroids.AsteroidsGUI.getPlayerData()[2] += 300;
             } else if (maxHealth == 1) {
-                asteroids.AsteroidsGUI.getPlayerData()[2] += 500;
+                asteroids.AsteroidsGUI.getPlayerData()[2] += 100;
             }
             int randomInt = (int) (Math.random() * 20 + 1);
             if (randomInt == 1 && gui.getPowerupsList().size() < 2) {

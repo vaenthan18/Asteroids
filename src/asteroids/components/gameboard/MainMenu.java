@@ -37,8 +37,8 @@ public class MainMenu extends JPanel {
 */
         MouseClickListener buttonPressed = new MouseClickListener(gui);
 
-        JButton startButton = new JButton("START");
-        startButton.setBounds(450, 350, 100, 50);
+        JButton startButton = new JButton("S T A R T");
+        startButton.setBounds(450, 350, 150, 50);
         startButton.setBackground(Color.BLACK);
         startButton.setForeground(Color.WHITE);
         startButton.setOpaque(true);
@@ -47,8 +47,8 @@ public class MainMenu extends JPanel {
         startButton.addActionListener(buttonPressed);
         startButton.setActionCommand("start");
 
-        JButton scoreButton = new JButton("SCORES");
-        scoreButton.setBounds(450, 425, 100, 50);
+        JButton scoreButton = new JButton("S C O R E S");
+        scoreButton.setBounds(450, 425, 150, 50);
         scoreButton.setBackground(Color.BLACK);
         scoreButton.setForeground(Color.WHITE);
         scoreButton.setOpaque(true);
@@ -61,5 +61,7 @@ public class MainMenu extends JPanel {
 
         this.add(startButton);
         this.add(scoreButton);
+
+
     }
 }
